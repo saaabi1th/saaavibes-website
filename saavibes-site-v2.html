@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#080b14">
+<title>SAAAVIBES — Your Digital Space</title>
+<style>
+:root{--bg:#080b14;--panel:rgba(255,255,255,.07);--line:#ffffff24;--text:#f5f6ff;--muted:#aab1c5;--a:#8b7cff;--b:#39d8c5}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(800px 500px at 80% 0%,#29205b,transparent 65%),radial-gradient(700px 500px at 0% 40%,#103c48,transparent 60%),var(--bg);color:var(--text);font:16px/1.6 system-ui,sans-serif}a{color:inherit;text-decoration:none}button,input{font:inherit}.wrap{width:min(1100px,92%);margin:auto}.top{position:sticky;top:0;z-index:9;background:#080b14df;backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}nav{min-height:68px;display:flex;align-items:center;justify-content:space-between;gap:14px}.brand{font-weight:950;letter-spacing:2px;font-size:1.15rem}.brand span{color:var(--b)}.links{display:flex;gap:18px;color:var(--muted);flex-wrap:wrap}.links a:hover{color:white}.btn{min-height:44px;padding:10px 17px;border:1px solid var(--line);border-radius:30px;background:var(--panel);color:white;cursor:pointer}.primary{background:linear-gradient(120deg,var(--a),#4c9fff);border:0}.hero{padding:76px 0 62px;min-height:470px;display:grid;grid-template-columns:1.2fr .8fr;gap:30px;align-items:center}.eyebrow{color:var(--b);font-size:.78rem;letter-spacing:2px;text-transform:uppercase;font-weight:800}.hero h1{font-size:clamp(2.8rem,7vw,5.6rem);line-height:1;letter-spacing:-3px;margin:15px 0}.gradient{background:linear-gradient(100deg,#fff,#a29aff,#54e4d2);color:transparent;background-clip:text}.lead,.muted{color:var(--muted)}.lead{font-size:1.1rem;max-width:570px}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}.orbcard{height:300px;border:1px solid var(--line);border-radius:30px;background:var(--panel);display:grid;place-items:center;backdrop-filter:blur(18px)}.orb{width:190px;height:190px;border-radius:50%;background:radial-gradient(circle at 30% 25%,white,#a99cff 18%,#6558ce 48%,#162a56 75%);box-shadow:0 0 90px #786aff88;animation:float 5s ease-in-out infinite}@keyframes float{50%{transform:translateY(-12px)}}section{padding:48px 0;scroll-margin-top:75px}.head{margin-bottom:22px}.head h2{font-size:clamp(1.8rem,4vw,2.6rem);margin:5px 0}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}.card{background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:22px;backdrop-filter:blur(15px);min-width:0}.card h3{margin:8px 0}.tag{display:inline-block;border:1px solid var(--line);border-radius:30px;padding:4px 10px;margin:4px;color:#d0ccff;font-size:.8rem}.field{width:100%;background:#080d19;color:white;border:1px solid var(--line);border-radius:12px;padding:12px;margin:5px 0;min-height:46px}.notice{color:var(--b);min-height:1.5em;font-size:.9rem}.hidden{display:none!important}.member-lock{padding:24px;border:1px solid var(--line);border-radius:22px;background:var(--panel);margin:22px auto 50px;text-align:center}.calc{max-width:620px}.calc-screen{width:100%;font-size:1.6rem;text-align:right;background:#050914;border:1px solid var(--line);border-radius:14px;color:white;padding:17px;margin:8px 0 14px}.calc-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}.calc-grid button{min-height:52px;border-radius:12px;border:1px solid var(--line);background:#ffffff0d;color:white;cursor:pointer;font-weight:650}.calc-grid button.op{background:#8274ff2b}.calc-grid button.equal{background:linear-gradient(120deg,var(--a),#4c9fff);border:0}.calc-grid button:active,.btn:active{transform:scale(.98)}.calc-help{font-size:.85rem;color:var(--muted)}dialog{background:#111626;color:white;border:1px solid var(--line);border-radius:22px;width:min(420px,92%);padding:24px}dialog::backdrop{background:#000c;backdrop-filter:blur(4px)}.form{display:grid;gap:10px}.close{float:right}footer{border-top:1px solid var(--line);padding:25px 0;color:var(--muted)}.foot{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+@media(max-width:780px){.hero{grid-template-columns:1fr;padding:58px 0 40px}.orbcard{height:230px}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:580px){nav{padding:10px 0;align-items:flex-start;flex-wrap:wrap}.links{order:3;width:100%;gap:12px;font-size:.9rem}.hero h1{letter-spacing:-1px}.grid{grid-template-columns:1fr}section{padding:38px 0}.orb{width:150px;height:150px}.calc-grid{gap:6px}.calc-grid button{min-height:48px;font-size:.92rem}.calc-screen{font-size:1.35rem}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap"><nav>
+<a class="brand" href="#home">SAAA<span>VIBES</span></a>
+<div class="links"><a href="#home">Home</a><a href="#calculator">Calculator</a><a href="#tools">Tools</a><a href="#projects">Projects</a></div>
+<button class="btn primary" id="authBtn">Login / Sign up</button>
+</nav></div></header>
+<main>
+<div class="wrap hero" id="home">
+<div><div class="eyebrow">Your digital space</div><h1>Welcome to<br><span class="gradient">SAAAVIBES.</span></h1>
+<p class="lead">A clean digital space for useful tools, smart experiments and creative projects.</p>
+<div class="actions"><button class="btn primary" id="heroLogin">Login to explore ↗</button><span class="tag">Members only</span></div></div>
+<div class="orbcard" aria-label="Abstract glowing sphere"><div class="orb"></div></div>
+</div>
+
+<div class="wrap member-lock" id="lockedMessage">
+<div class="eyebrow">Private member area</div><h2>Sign in to use SAAAVIBES</h2>
+<p class="muted">The calculator, tools and member features are available only after login.</p>
+<button class="btn primary" id="lockLogin">Login / Create account</button>
+<p class="notice" id="gateNote" aria-live="polite"></p>
+</div>
+
+<div id="memberArea" class="hidden">
+<section id="calculator"><div class="wrap">
+<div class="head"><div class="eyebrow">Precision tool</div><h2>Scientific Calculator</h2><p class="muted">Supports brackets, powers, roots, trigonometry, logarithms and constants.</p></div>
+<div class="card calc">
+<div class="toolactions" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><label for="angleMode" class="muted">Angle mode</label><select id="angleMode" class="field" style="width:auto;min-width:125px"><option value="DEG">Degrees</option><option value="RAD">Radians</option></select><button class="btn" id="calcClear">AC</button><button class="btn" id="calcDelete">DEL</button></div>
+<input id="calcScreen" class="calc-screen" inputmode="decimal" autocomplete="off" aria-label="Calculator expression" placeholder="0">
+<div class="calc-grid" id="calcKeys">
+<button data-v="sin(">sin</button><button data-v="cos(">cos</button><button data-v="tan(">tan</button><button data-v="sqrt(">√</button><button data-v="^2">x²</button>
+<button data-v="asin(">sin⁻¹</button><button data-v="acos(">cos⁻¹</button><button data-v="atan(">tan⁻¹</button><button data-v="log(">log</button><button data-v="ln(">ln</button>
+<button data-v="(">(</button><button data-v=")">)</button><button data-v="pi">π</button><button data-v="e">e</button><button data-v="^">xʸ</button>
+<button data-v="7">7</button><button data-v="8">8</button><button data-v="9">9</button><button data-v="/">÷</button><button data-v="%">%</button>
+<button data-v="4">4</button><button data-v="5">5</button><button data-v="6">6</button><button data-v="*">×</button><button data-v="!">!</button>
+<button data-v="1">1</button><button data-v="2">2</button><button data-v="3">3</button><button data-v="-">−</button><button data-v="+">+</button>
+<button data-v="0">0</button><button data-v=".">.</button><button data-v="Ans">Ans</button><button data-v="neg">±</button><button class="equal" id="calcEquals">=</button>
+</div><p class="notice" id="calcNote" aria-live="polite"></p>
+<p class="calc-help">Tip: type an expression or tap the buttons. Example: sin(30)+sqrt(16). Factorial is for non-negative whole numbers. % means percentage (÷100).</p>
+</div></div></section>
+
+<section id="tools"><div class="wrap"><div class="head"><div class="eyebrow">Member tools</div><h2>Quick Tools</h2></div>
+<div class="grid">
+<article class="card"><h3>Text case converter</h3><textarea class="field" id="txt" rows="3" placeholder="Type text..."></textarea><div class="toolactions"><button class="btn" id="upper">UPPERCASE</button><button class="btn" id="lower">lowercase</button></div></article>
+<article class="card"><h3>Number guessing game</h3><p class="muted">Guess a number from 1 to 10.</p><input class="field" id="guess" type="number" min="1" max="10" placeholder="Your guess"><button class="btn primary" id="play">Guess</button><p class="notice" id="gameNote"></p></article>
+<article class="card"><h3>Random password</h3><p class="muted">Generated on this device. Store it safely.</p><button class="btn" id="makePass">Generate</button><input class="field" id="pass" readonly aria-label="Generated password"></article>
+</div></div></section>
+<section id="projects"><div class="wrap"><div class="head"><div class="eyebrow">Explore</div><h2>Projects</h2></div><div class="grid"><article class="card"><h3>Web experiments</h3><p class="muted">Interactive browser-based projects.</p></article><article class="card"><h3>Digital tools</h3><p class="muted">Useful utilities for everyday tasks.</p></article><article class="card"><h3>New ideas</h3><p class="muted">More member features can be added over time.</p></article></div></div></section>
+<section id="account"><div class="wrap"><div class="card"><div class="head"><div class="eyebrow">Member account</div><h2>My Account</h2><p class="muted" id="accountMsg">Loading account…</p></div><div id="profile" class="hidden"><p id="email"></p><input class="field" id="displayName" maxlength="60" placeholder="Display name"><button class="btn" id="save">Save profile</button><button class="btn" id="logout">Logout</button><p class="notice" id="profileNote"></p></div></div></div></section>
+</div>
+</main>
+<footer><div class="wrap foot"><span>© <span id="year"></span> SAAAVIBES</span><span>Responsive • Member access</span></div></footer>
+
+<dialog id="authDialog"><button class="btn close" id="close" type="button">✕</button><h2 id="authTitle">Welcome back</h2>
+<form class="form" id="authForm"><input class="field" id="emailInput" type="email" placeholder="Email address" required><input class="field" id="passwordInput" type="password" minlength="6" placeholder="Password (6+ characters)" required><input class="field hidden" id="nameInput" maxlength="60" placeholder="Display name"><button class="btn primary" id="submit" type="submit">Login</button><button class="btn" id="switch" type="button">Create account</button><small class="muted">If email confirmation is enabled, confirm your email before logging in.</small><p class="notice" id="authNote" aria-live="polite"></p></form></dialog>
+
+<script type="module">
+const SUPABASE_URL="https://pcvfiexnouyozcxhsbxz.supabase.co";
+const SUPABASE_KEY="sb_publishable_4s-gGBqyUFjnKMmvDUNVFg_oITpq2Ok";
+const $=id=>document.getElementById(id);$("year").textContent=new Date().getFullYear();
+let answer=0,math=null;
+const screen=$("calcScreen"),note=$("calcNote");
+function insert(v){if(v==="neg"){screen.value=screen.value?`-(${screen.value})`:"-";return}if(v==="Ans"){screen.value+=String(answer);return}screen.value+=v;screen.focus()}
+$("calcKeys").addEventListener("click",e=>{const b=e.target.closest("button[data-v]");if(b)insert(b.dataset.v)});
+$("calcClear").onclick=()=>{screen.value="";note.textContent=""};
+$("calcDelete").onclick=()=>{screen.value=screen.value.slice(0,-1);screen.focus()};
+$("calcEquals").onclick=calculate;
+screen.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();calculate()}if(e.key==="Escape")$("calcClear").click()});
+async function calculate(){
+ const expr=screen.value.trim();if(!expr){note.textContent="Enter a calculation first.";return}
+ try{
+  if(!math){note.textContent="Loading calculator engine…";const m=await import("https://cdn.jsdelivr.net/npm/mathjs@14.8.1/+esm");math=m.create(m.all,{number:"number",precision:14})}
+  let prepared=expr.replace(/π/g,"pi").replace(/×/g,"*").replace(/÷/g,"/");
+  const mode=$("angleMode").value;
+  const scope={};
+  const fns=["sin","cos","tan","asin","acos","atan"];
+  for(const fn of fns){scope[fn]=(x)=>{if(["sin","cos","tan"].includes(fn))return Math[fn](mode==="DEG"?x*Math.PI/180:x);const r=Math[fn](x);return mode==="DEG"?r*180/Math.PI:r}}
+  scope.sqrt=Math.sqrt;scope.log=Math.log10;scope.ln=Math.log;scope.pi=Math.PI;scope.e=Math.E;scope.Ans=answer;
+  // Restrict expression nodes to mathematical operations and approved functions.
+  const node=math.parse(prepared);
+  node.traverse(n=>{if(n.isSymbolNode&&!["sin","cos","tan","asin","acos","atan","sqrt","log","ln","pi","e","Ans"].includes(n.name))throw Error("Unsupported name: "+n.name);if(n.isFunctionNode&&!["sin","cos","tan","asin","acos","atan","sqrt","log","ln"].includes(n.fn.name))throw Error("Unsupported function")});
+  const value=node.compile().evaluate(scope);
+  if(typeof value!=="number"||!Number.isFinite(value))throw Error("Result is not a finite real number");
+  answer=value;screen.value=Number(value.toPrecision(12)).toString();note.textContent="Calculated.";
+ }catch(err){note.textContent="Check the expression. "+(err.message||"Invalid calculation");}
+}
+$("upper").onclick=()=>$("txt").value=$("txt").value.toUpperCase();$("lower").onclick=()=>$("txt").value=$("txt").value.toLowerCase();
+$("play").onclick=()=>{const n=Number($("guess").value);$("gameNote").textContent=(!Number.isInteger(n)||n<1||n>10)?"Enter a whole number from 1 to 10.":(n===Math.ceil(Math.random()*10)?"Correct! 🎉":"Not this time — try again.")};
+$("makePass").onclick=()=>{const chars="ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789!@#$%";const a=new Uint32Array(18);crypto.getRandomValues(a);$("pass").value=Array.from(a,x=>chars[x%chars.length]).join("")};
+
+let sb=null,user=null,signup=false;
+function openAuth(){$("authDialog").showModal()}
+["authBtn","heroLogin","lockLogin"].forEach(id=>$(id).addEventListener("click",openAuth));
+$("close").onclick=()=>$("authDialog").close();
+$("switch").onclick=()=>{signup=!signup;$("authTitle").textContent=signup?"Create account":"Welcome back";$("submit").textContent=signup?"Sign up":"Login";$("switch").textContent=signup?"I already have an account":"Create account";$("nameInput").classList.toggle("hidden",!signup);$("authNote").textContent=""};
+function showMember(){const ok=!!user;$("memberArea").classList.toggle("hidden",!ok);$("lockedMessage").classList.toggle("hidden",ok);$("authBtn").textContent=ok?"Account / Logout":"Login / Sign up";$("accountMsg").textContent=ok?"You are signed in.":"Sign in to use member features."; $("profile").classList.toggle("hidden",!ok);if(ok){$("email").textContent="Signed in as: "+user.email;$("accountMsg").textContent="Signed in successfully.";}}
+async function refresh(){const {data:{session}}=await sb.auth.getSession();user=session?.user||null;showMember();if(user){const {data}=await sb.from("profiles").select("full_name").eq("id",user.id).maybeSingle();$("displayName").value=data?.full_name||user.user_metadata?.full_name||""}}
+$("authForm").onsubmit=async e=>{e.preventDefault();if(!sb){$("authNote").textContent="Login service is loading. Try again in a moment.";return}$("authNote").textContent="Please wait…";const email=$("emailInput").value.trim(),password=$("passwordInput").value;let r;
+if(signup){r=await sb.auth.signUp({email,password,options:{data:{full_name:$("nameInput").value.trim()}}});if(!r.error)$("authNote").textContent="Account created. Check your email to confirm, then log in."}
+else{r=await sb.auth.signInWithPassword({email,password});if(!r.error){await refresh();$("authDialog").close()}}
+if(r?.error)$("authNote").textContent=r.error.message;};
+$("save").onclick=async()=>{if(!user)return;$("profileNote").textContent="Saving…";const {error}=await sb.from("profiles").upsert({id:user.id,full_name:$("displayName").value.trim()},{onConflict:"id"});$("profileNote").textContent=error?error.message:"Profile saved."};
+$("logout").onclick=async()=>{await sb.auth.signOut();await refresh();window.scrollTo({top:0,behavior:"smooth"})};
+try{const {createClient}=await import("https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm");sb=createClient(SUPABASE_URL,SUPABASE_KEY);sb.auth.onAuthStateChange(()=>refresh());await refresh()}catch(e){$("gateNote").textContent="Login service could not load. Check your internet connection and Supabase settings.";console.error(e)}
+</script>
+</body></html>
