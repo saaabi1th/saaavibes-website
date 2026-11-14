@@ -1,0 +1,2890 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="obsidian" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Muhammed Sabith — Creative Web Developer & UI Engineer · Malappuram, Kerala</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts: Syne (Display), Plus Jakarta Sans (UI/Body), Instrument Serif (Editorial Accents), JetBrains Mono (Telemetry) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Syne', 'sans-serif'],
+            sans: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+            serif: ['Instrument Serif', 'Georgia', 'serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* ==========================================================================
+       1. AWWWARDS MULTI-THEME DESIGN SYSTEM TOKENS
+       ========================================================================== */
+    :root,
+    html[data-theme="obsidian"] {
+      --bg: #050609;
+      --bg-elevated: #0b0e15;
+      --surface: rgba(14, 18, 27, 0.76);
+      --surface-solid: #0f131d;
+      --surface-glass: rgba(255, 255, 255, 0.035);
+      --ink: #f4f6fb;
+      --mut: #8b95a9;
+      --line: rgba(255, 255, 255, 0.085);
+      --line-bright: rgba(212, 255, 51, 0.35);
+      --accent: #d4ff33;
+      --accent-ink: #060904;
+      --accent-rgb: 212, 255, 51;
+      --em: #10b981;
+      --gold: #f5d08a;
+      --shadow-lg: 0 32px 70px -24px rgba(0, 0, 0, 0.85);
+      color-scheme: dark;
+    }
+
+    html[data-theme="titanium"] {
+      --bg: #f4f5f8;
+      --bg-elevated: #ffffff;
+      --surface: rgba(255, 255, 255, 0.86);
+      --surface-solid: #ffffff;
+      --surface-glass: rgba(9, 13, 22, 0.035);
+      --ink: #090d16;
+      --mut: #525c70;
+      --line: rgba(9, 13, 22, 0.1);
+      --line-bright: rgba(16, 185, 129, 0.45);
+      --accent: #090d16;
+      --accent-ink: #d4ff33;
+      --accent-rgb: 16, 185, 129;
+      --em: #059669;
+      --gold: #b45309;
+      --shadow-lg: 0 28px 60px -26px rgba(9, 13, 22, 0.16);
+      color-scheme: light;
+    }
+
+    html[data-theme="emerald"] {
+      --bg: #030907;
+      --bg-elevated: #07130f;
+      --surface: rgba(9, 24, 19, 0.78);
+      --surface-solid: #0a1b15;
+      --surface-glass: rgba(52, 211, 153, 0.05);
+      --ink: #ecfdf5;
+      --mut: #86a89b;
+      --line: rgba(52, 211, 153, 0.14);
+      --line-bright: rgba(52, 211, 153, 0.45);
+      --accent: #34d399;
+      --accent-ink: #03110c;
+      --accent-rgb: 52, 211, 153;
+      --em: #d4ff33;
+      --gold: #fbbf24;
+      --shadow-lg: 0 32px 70px -24px rgba(0, 0, 0, 0.9);
+      color-scheme: dark;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 100px;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--ink);
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      overflow-x: hidden;
+      min-height: 100vh;
+      transition: background-color 0.45s ease, color 0.45s ease;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body.lock {
+      overflow: hidden;
+    }
+
+    /* Subtle Film Grain Overlay for Luxury Depth */
+    .noise-overlay {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 90;
+      opacity: 0.025;
+      background-image: radial-gradient(rgba(255,255,255,0.6) 1px, transparent 0);
+      background-size: 24px 24px;
+    }
+
+    /* Top Scroll Progress Indicator */
+    #scroll-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      width: 0%;
+      z-index: 100;
+      background: linear-gradient(90deg, var(--em), var(--accent), #38bdf8);
+      box-shadow: 0 0 16px var(--accent);
+    }
+
+    /* ==========================================================================
+       2. CUSTOM DUAL MAGNETIC CURSOR
+       ========================================================================== */
+    #cursor-dot,
+    #cursor-ring {
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 140;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+      will-change: transform;
+    }
+
+    #cursor-dot {
+      width: 8px;
+      height: 8px;
+      margin: -4px 0 0 -4px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 12px var(--accent);
+    }
+
+    #cursor-ring {
+      width: 40px;
+      height: 40px;
+      margin: -20px 0 0 -20px;
+      border-radius: 999px;
+      border: 1px solid rgba(var(--accent-rgb), 0.45);
+      background: rgba(var(--accent-rgb), 0.04);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font: 700 10px/1 'JetBrains Mono', monospace;
+      letter-spacing: 0.08em;
+      color: var(--accent-ink);
+      text-transform: uppercase;
+      transition: width 0.32s cubic-bezier(0.16, 1, 0.3, 1),
+                  height 0.32s cubic-bezier(0.16, 1, 0.3, 1),
+                  margin 0.32s cubic-bezier(0.16, 1, 0.3, 1),
+                  background 0.28s ease,
+                  border-color 0.28s ease;
+    }
+
+    #cursor-ring.expand {
+      width: 98px;
+      height: 38px;
+      margin: -19px 0 0 -49px;
+      background: var(--accent);
+      border-color: var(--accent);
+      box-shadow: 0 14px 35px -8px rgba(var(--accent-rgb), 0.6);
+    }
+
+    @media (hover: none) {
+      #cursor-dot, #cursor-ring { display: none !important; }
+    }
+
+    /* ==========================================================================
+       3. CINEMATIC SHUTTER PRELOADER
+       ========================================================================== */
+    #preloader {
+      position: fixed;
+      inset: 0;
+      z-index: 130;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: clamp(20px, 4vw, 44px);
+      color: #f4f6fb;
+      pointer-events: auto;
+    }
+
+    .shutter-top,
+    .shutter-bottom {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 50.5%;
+      background: #040508;
+      z-index: -1;
+      transition: transform 1.05s cubic-bezier(0.83, 0, 0.17, 1);
+    }
+
+    .shutter-top { top: 0; border-bottom: 1px solid rgba(212, 255, 51, 0.2); }
+    .shutter-bottom { bottom: 0; }
+
+    #preloader.done {
+      pointer-events: none;
+    }
+    #preloader.done .shutter-top { transform: translateY(-102%); }
+    #preloader.done .shutter-bottom { transform: translateY(102%); }
+    #preloader.done .pre-content {
+      opacity: 0;
+      transform: scale(0.96);
+      transition: opacity 0.45s ease, transform 0.45s ease;
+    }
+
+    .char-reveal {
+      display: inline-block;
+      transform: translateY(115%) rotate(6deg);
+      animation: charUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      animation-delay: calc(0.12s + var(--i) * 35ms);
+    }
+
+    @keyframes charUp {
+      to { transform: translateY(0) rotate(0deg); }
+    }
+
+    /* ==========================================================================
+       4. GLASSSURFACE, BENTO SPOTLIGHT & 3D TILT CARDS
+       ========================================================================== */
+    .glass-panel {
+      background: var(--surface);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .spotlight-card {
+      position: relative;
+      background: var(--surface);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+      transform-style: preserve-3d;
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                  border-color 0.3s ease,
+                  box-shadow 0.35s ease;
+      --mx: 50%;
+      --my: 50%;
+    }
+
+    .spotlight-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: radial-gradient(
+        520px circle at var(--mx) var(--my),
+        rgba(var(--accent-rgb), 0.13),
+        transparent 60%
+      );
+      opacity: 0;
+      transition: opacity 0.35s ease;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .spotlight-card:hover::before {
+      opacity: 1;
+    }
+
+    .spotlight-card:hover {
+      border-color: var(--line-bright);
+    }
+
+    /* ==========================================================================
+       5. HERO KINETIC TYPOGRAPHY & 3D BROWSER SHOWCASE DECK
+       ========================================================================== */
+    .hero-line {
+      display: block;
+      overflow: hidden;
+      padding-bottom: 0.08em;
+    }
+
+    .hero-line > span {
+      display: block;
+      transform: translateY(112%);
+      transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+      transition-delay: var(--d, 0s);
+    }
+
+    body.ready .hero-line > span {
+      transform: translateY(0);
+    }
+
+    .shimmer-serif {
+      font-family: 'Instrument Serif', Georgia, serif;
+      font-style: italic;
+      font-weight: 400;
+      background: linear-gradient(110deg, var(--accent) 0%, #ffffff 45%, var(--em) 75%, var(--accent) 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: textShimmer 6s linear infinite;
+    }
+
+    html[data-theme="titanium"] .shimmer-serif {
+      background: linear-gradient(110deg, #059669 0%, #090d16 50%, #2563eb 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    @keyframes textShimmer {
+      to { background-position: 200% center; }
+    }
+
+    /* 3D Hero Browser Stack */
+    .hero-deck {
+      position: relative;
+      height: 500px;
+      perspective: 1400px;
+      transform-style: preserve-3d;
+    }
+
+    .deck-window {
+      position: absolute;
+      border-radius: 20px;
+      background: #0c1018;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      box-shadow: 0 35px 70px -20px rgba(0, 0, 0, 0.85);
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+                  border-color 0.3s ease,
+                  box-shadow 0.4s ease;
+    }
+
+    .deck-window:hover {
+      border-color: var(--accent);
+      z-index: 30 !important;
+      box-shadow: 0 40px 80px -15px rgba(var(--accent-rgb), 0.3);
+    }
+
+    .deck-w1 {
+      width: 82%;
+      top: 10px;
+      left: 0;
+      z-index: 10;
+      transform: rotateY(-12deg) rotateX(6deg) rotateZ(-3deg) translateZ(0px);
+    }
+
+    .deck-w2 {
+      width: 84%;
+      top: 115px;
+      right: 0;
+      z-index: 20;
+      transform: rotateY(-10deg) rotateX(5deg) rotateZ(2deg) translateZ(40px);
+    }
+
+    .deck-w3 {
+      width: 80%;
+      bottom: 8px;
+      left: 6%;
+      z-index: 25;
+      transform: rotateY(-8deg) rotateX(4deg) rotateZ(-1.5deg) translateZ(75px);
+    }
+
+    .deck-window:hover {
+      transform: rotateY(0deg) rotateX(0deg) rotateZ(0deg) scale(1.04) translateZ(95px) !important;
+    }
+
+    @media (max-width: 640px) {
+      .hero-deck { height: 420px; }
+      .deck-w1 { width: 92%; left: 0; }
+      .deck-w2 { width: 92%; right: 0; top: 100px; }
+      .deck-w3 { width: 92%; left: 4%; bottom: 0; }
+    }
+
+    /* ==========================================================================
+       6. PROJECT BROWSER CARD THUMBNAILS (11 REALISTIC PREVIEWS)
+       ========================================================================== */
+    .project-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border-radius: 24px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      overflow: hidden;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                  border-color 0.3s ease,
+                  box-shadow 0.4s ease;
+      cursor: pointer;
+    }
+
+    .project-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--line-bright);
+      box-shadow: 0 32px 65px -24px rgba(0, 0, 0, 0.8), 0 0 35px -12px rgba(var(--accent-rgb), 0.28);
+    }
+
+    .project-card .thumb-img {
+      transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .project-card:hover .thumb-img {
+      transform: scale(1.08);
+    }
+
+    /* ==========================================================================
+       7. SCROLL REVEAL & RADAR ANIMATIONS
+       ========================================================================== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(34px);
+      transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+      transition-delay: var(--d, 0s);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @keyframes radarPulse {
+      0% { transform: scale(0.3); opacity: 0.9; }
+      100% { transform: scale(2.4); opacity: 0; }
+    }
+
+    .radar-wave {
+      transform-origin: center;
+      animation: radarPulse 2.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+    }
+
+    .radar-wave-delay {
+      animation-delay: 1.4s;
+    }
+
+    /* ==========================================================================
+       8. FULL-SCREEN LIVE WEBSITE BROWSER SIMULATOR MODAL
+       ========================================================================== */
+    #sim-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 120;
+      background: rgba(3, 5, 8, 0.86);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      display: none;
+      padding: clamp(8px, 1.8vw, 20px);
+    }
+
+    #sim-modal.open {
+      display: flex;
+      animation: modalFade 0.3s ease forwards;
+    }
+
+    @keyframes modalFade {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .sim-shell {
+      width: 100%;
+      max-width: 1440px;
+      height: 100%;
+      margin: auto;
+      background: #0a0d14;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 22px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 45px 100px -20px rgba(0, 0, 0, 0.95);
+      animation: shellPop 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes shellPop {
+      from { transform: translateY(36px) scale(0.96); opacity: 0; }
+    }
+
+    .sim-canvas-wrap {
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+      background: #06080d;
+      background-image: radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+      background-size: 22px 22px;
+      display: flex;
+      justify-content: center;
+      padding: 0;
+      transition: padding 0.35s ease;
+    }
+
+    .sim-canvas-wrap.framed {
+      padding: 24px 16px;
+    }
+
+    #sim-frame {
+      width: 100%;
+      max-width: 100%;
+      background: #ffffff;
+      color: #0f172a;
+      position: relative;
+      overflow-x: hidden;
+      transition: max-width 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+                  border-radius 0.4s ease;
+      align-self: flex-start;
+      min-height: 100%;
+      box-shadow: 0 30px 70px -15px rgba(0, 0, 0, 0.75);
+    }
+
+    #sim-frame.tablet-vp {
+      max-width: 780px;
+      border-radius: 20px;
+      border: 6px solid #1e293b;
+    }
+
+    #sim-frame.mobile-vp {
+      max-width: 390px;
+      border-radius: 34px;
+      border: 8px solid #1e293b;
+    }
+
+    /* Splash Curtain inside Simulated Website */
+    .sim-splash {
+      position: absolute;
+      inset: 0;
+      z-index: 60;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      pointer-events: none;
+      animation: splashSlideUp 0.75s cubic-bezier(0.83, 0, 0.17, 1) 0.55s forwards;
+    }
+
+    @keyframes splashSlideUp {
+      to { transform: translateY(-102%); visibility: hidden; }
+    }
+
+    /* Slide-Over Interactive Drawer inside Simulated Website */
+    #sim-drawer {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: min(380px, 92%);
+      z-index: 55;
+      transform: translateX(105%);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: -25px 0 60px rgba(0, 0, 0, 0.45);
+    }
+
+    #sim-drawer.open {
+      transform: translateX(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Film Grain & Top Scroll Bar -->
+  <div class="noise-overlay"></div>
+  <div id="scroll-bar"></div>
+
+  <!-- Custom Magnetic Dual Cursor -->
+  <div id="cursor-dot"></div>
+  <div id="cursor-ring"></div>
+
+  <!-- Interactive Aurora & Constellation Background Canvas -->
+  <canvas id="ambient-canvas" class="fixed inset-0 w-full h-full pointer-events-none z-0"></canvas>
+
+  <!-- ========================================================================
+       1. CINEMATIC SHUTTER PRELOADER
+       ======================================================================== -->
+  <div id="preloader" aria-hidden="true">
+    <div class="shutter-top"></div>
+    <div class="shutter-bottom"></div>
+
+    <!-- Top Telemetry Row -->
+    <div class="pre-content flex items-center justify-between text-xs font-mono tracking-widest uppercase text-zinc-400">
+      <div class="flex items-center gap-2.5">
+        <span class="w-2 h-2 rounded-full bg-[#d4ff33] animate-ping"></span>
+        <span>MALAPPURAM, KERALA // 11.0510° N, 76.0711° E</span>
+      </div>
+      <button id="skip-preloader" type="button" class="px-3.5 py-1.5 rounded-full border border-white/15 bg-white/5 hover:bg-white/15 text-white transition pointer-events-auto">
+        Skip Intro ↗
+      </button>
+    </div>
+
+    <!-- Center Kinetic Name Reveal -->
+    <div class="pre-content my-auto text-center px-2">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-[#d4ff33]/30 bg-[#d4ff33]/10 text-[#d4ff33] font-mono text-[11px] uppercase tracking-widest mb-5">
+        <span>Portfolio & Live Web Studio · Edition 2026</span>
+      </div>
+      <div id="preloader-name" class="font-display font-extrabold tracking-tight leading-none overflow-hidden py-2"
+           style="font-size: clamp(32px, 8.2vw, 96px);">
+      </div>
+      <p class="mt-3 text-sm sm:text-base text-zinc-400 font-sans max-w-md mx-auto">
+        Initializing <span class="text-white font-semibold">11 interactive concept websites</span> across 8 industries...
+      </p>
+    </div>
+
+    <!-- Bottom Progress Counter & Bar -->
+    <div class="pre-content space-y-3">
+      <div class="flex items-end justify-between">
+        <span class="font-mono text-xs uppercase tracking-widest text-zinc-500">System Readiness</span>
+        <div class="font-display font-extrabold text-4xl sm:text-6xl leading-none text-[#d4ff33]">
+          <span id="preloader-num">000</span><span class="text-xl sm:text-2xl text-zinc-500">%</span>
+        </div>
+      </div>
+      <div class="w-full h-1 bg-white/10 rounded-full overflow-hidden">
+        <div id="preloader-bar" class="h-full bg-[#d4ff33] w-0 transition-all duration-100"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       2. FLOATING APPLE-PRO GLASSMORPHIC DOCK NAVBAR
+       ======================================================================== -->
+  <header class="fixed top-4 left-0 right-0 z-50 px-3 sm:px-6">
+    <div class="max-w-7xl mx-auto glass-panel rounded-full px-4 sm:px-6 py-2.5 flex items-center justify-between gap-3">
+      <!-- Brand Identity -->
+      <a href="#top" class="flex items-center gap-3 group">
+        <div class="w-9 h-9 rounded-full flex items-center justify-center font-display font-extrabold text-sm transition-transform group-hover:scale-105"
+             style="background: var(--accent); color: var(--accent-ink);">
+          MS
+        </div>
+        <div class="leading-tight">
+          <div class="font-display font-bold text-sm sm:text-base tracking-tight flex items-center gap-1.5">
+            <span>Muhammed Sabith</span>
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" title="Available for projects"></span>
+          </div>
+          <div class="font-mono text-[10px] uppercase tracking-wider hidden sm:block" style="color: var(--mut);">
+            Malappuram, Kerala · Web Developer
+          </div>
+        </div>
+      </a>
+
+      <!-- Center Navigation Links -->
+      <nav class="hidden lg:flex items-center gap-1 text-xs font-semibold tracking-wide">
+        <a href="#work" class="px-4 py-2 rounded-full hover:bg-white/10 transition flex items-center gap-2">
+          <span>Live Websites</span>
+          <span class="px-1.5 py-0.5 rounded-full text-[10px] font-mono font-bold" style="background: var(--accent); color: var(--accent-ink);">11</span>
+        </a>
+        <a href="#about" class="px-4 py-2 rounded-full hover:bg-white/10 transition">Architecture</a>
+        <a href="#services" class="px-4 py-2 rounded-full hover:bg-white/10 transition">Capabilities</a>
+        <a href="#process" class="px-4 py-2 rounded-full hover:bg-white/10 transition">Process</a>
+        <a href="#contact" class="px-4 py-2 rounded-full hover:bg-white/10 transition">Contact</a>
+      </nav>
+
+      <!-- Right Controls: Theme Switcher, SFX Toggle, Hire CTA -->
+      <div class="flex items-center gap-2">
+        <!-- 3-Theme Switcher -->
+        <div class="flex items-center gap-1.5 px-2.5 py-1.5 rounded-full border border-current/10 bg-black/20" title="Switch Visual Theme">
+          <button type="button" data-theme-btn="obsidian" aria-label="Obsidian Pro Theme"
+                  class="theme-pill w-4 h-4 rounded-full bg-[#d4ff33] ring-2 ring-white transition-transform hover:scale-110"></button>
+          <button type="button" data-theme-btn="titanium" aria-label="Titanium Light Theme"
+                  class="theme-pill w-4 h-4 rounded-full bg-[#f4f5f8] border border-black/30 opacity-60 hover:opacity-100 transition-transform hover:scale-110"></button>
+          <button type="button" data-theme-btn="emerald" aria-label="Midnight Emerald Theme"
+                  class="theme-pill w-4 h-4 rounded-full bg-[#34d399] opacity-60 hover:opacity-100 transition-transform hover:scale-110"></button>
+        </div>
+
+        <!-- WebAudio SFX Toggle -->
+        <button id="sfx-toggle" type="button" title="Toggle Harmonic UI Sound"
+                class="px-3 py-1.5 rounded-full border border-current/10 bg-white/5 hover:bg-white/10 text-xs font-mono transition flex items-center gap-1.5">
+          <span id="sfx-dot" class="w-2 h-2 rounded-full bg-[#d4ff33]"></span>
+          <span id="sfx-text" class="hidden sm:inline">AUDIO ON</span>
+        </button>
+
+        <!-- Primary CTA -->
+        <a href="#contact" data-cursor="HIRE ME ↗"
+           class="magnetic px-4 sm:px-5 py-2.5 rounded-full font-display font-bold text-xs sm:text-sm tracking-tight transition flex items-center gap-1.5 shadow-lg"
+           style="background: var(--accent); color: var(--accent-ink);">
+          <span>Hire Sabith</span>
+          <span>↗</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main id="top" class="relative z-10">
+
+    <!-- ======================================================================
+         3. HERO SECTION (AGENCY IMPACT + 3D LIVE WEBSITE SHOWCASE DECK)
+         ====================================================================== -->
+    <section class="min-h-screen pt-32 pb-16 sm:pt-36 sm:pb-24 flex flex-col justify-between relative overflow-hidden">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 w-full my-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+
+          <!-- Left Column: Kinetic Headline, Story & Magnetic Actions (7 cols) -->
+          <div class="lg:col-span-7 space-y-6">
+            <!-- Live Status & Location Pill -->
+            <div class="inline-flex flex-wrap items-center gap-2.5 px-3.5 py-1.5 rounded-full border border-current/15 bg-white/5 backdrop-blur-md text-xs font-mono">
+              <span class="relative flex h-2 w-2">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+              </span>
+              <span class="font-semibold tracking-wide">AVAILABLE FOR NEW PROJECTS</span>
+              <span class="opacity-40">|</span>
+              <span style="color: var(--mut);">MALAPPURAM, KERALA</span>
+              <span id="hero-ist-clock" class="px-2 py-0.5 rounded bg-white/10 text-[11px]">IST</span>
+            </div>
+
+            <!-- Massive Split Kinetic Headline -->
+            <h1 class="font-display font-extrabold tracking-tight leading-[0.95]"
+                style="font-size: clamp(42px, 6.8vw, 92px);">
+              <span class="hero-line"><span style="--d: 0.1s">Architecting</span></span>
+              <span class="hero-line"><span style="--d: 0.22s"><em class="shimmer-serif pr-2">High-Conversion</em></span></span>
+              <span class="hero-line"><span style="--d: 0.34s">Websites.</span></span>
+            </h1>
+
+            <!-- Personalized Bio & Value Proposition -->
+            <p class="text-base sm:text-lg md:text-xl max-w-2xl leading-relaxed" style="color: var(--mut);">
+              I’m <strong style="color: var(--ink);">Muhammed Sabith</strong>, a Web Developer from <strong style="color: var(--ink);">Malappuram, Kerala</strong> with 1+ year of focused experience. I design and engineer fast, animated, mobile-first websites for ambitious brands. Explore <strong style="color: var(--ink);">11 realistic, multi-section live concept websites</strong> below.
+            </p>
+
+            <!-- Dynamic Morphing Specialty Line -->
+            <div class="flex items-center gap-3 font-mono text-xs sm:text-sm pt-1">
+              <span class="uppercase tracking-widest opacity-60">ENGINEERED FOR:</span>
+              <span id="typewriter-role" class="px-3 py-1 rounded-md font-bold"
+                    style="background: rgba(var(--accent-rgb), 0.14); color: var(--accent); border: 1px solid rgba(var(--accent-rgb), 0.3);">
+                E-Commerce Brands
+              </span>
+            </div>
+
+            <!-- Magnetic CTA Buttons -->
+            <div class="flex flex-wrap items-center gap-4 pt-3">
+              <a href="#work" data-cursor="11 SITES ↓"
+                 class="magnetic px-7 py-4 rounded-full font-display font-bold text-sm sm:text-base transition flex items-center gap-3 shadow-xl"
+                 style="background: var(--accent); color: var(--accent-ink);">
+                <span>Explore 11 Live Websites</span>
+                <span class="w-6 h-6 rounded-full bg-black/15 flex items-center justify-center text-xs">↓</span>
+              </a>
+
+              <a href="#contact" data-cursor="START ↗"
+                 class="magnetic px-7 py-4 rounded-full font-display font-bold text-sm sm:text-base border border-current/15 bg-white/5 hover:bg-white/10 transition flex items-center gap-2">
+                <span>Start Your Project</span>
+                <span>↗</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Right Column: Interactive 3D Layered Live Browser Showcase (5 cols) -->
+          <div class="lg:col-span-5">
+            <div class="hero-deck" id="hero-3d-deck">
+
+              <!-- Window 1: Lumen Beauty E-Commerce (Index 1) -->
+              <div class="deck-window deck-w1" data-launch-demo="1" data-cursor="LAUNCH SITE ↗">
+                <div class="px-3.5 py-2 bg-[#141923] border-b border-white/10 flex items-center justify-between text-[11px] font-mono text-zinc-400">
+                  <div class="flex items-center gap-1.5">
+                    <span class="w-2.5 h-2.5 rounded-full bg-rose-500/80"></span>
+                    <span class="w-2.5 h-2.5 rounded-full bg-amber-400/80"></span>
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500/80"></span>
+                  </div>
+                  <span class="text-zinc-300">🔒 lumenbeauty.co</span>
+                  <span class="px-2 py-0.5 rounded bg-pink-500/20 text-pink-300 text-[10px]">E-Commerce</span>
+                </div>
+                <div class="relative h-56 overflow-hidden bg-zinc-900">
+                  <img src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=900&q=80"
+                       onerror="this.src='https://placehold.co/900x500/2e1025/f9a8d4?text=Lumen+Skincare'"
+                       alt="Lumen Skincare Store" class="w-full h-full object-cover opacity-85" />
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-transparent p-4 flex flex-col justify-between">
+                    <div class="flex justify-between items-center text-white text-xs">
+                      <span class="font-serif italic text-lg">Lumen Botanicals</span>
+                      <span class="px-2.5 py-1 rounded-full bg-white/20 backdrop-blur-md text-[10px] font-mono">Bag (2) · $62</span>
+                    </div>
+                    <div class="flex items-end justify-between gap-2">
+                      <div>
+                        <span class="text-[10px] font-mono uppercase tracking-widest text-pink-300">Clinical Botanicals</span>
+                        <h3 class="text-white font-display font-bold text-lg leading-tight">Skincare that loves your skin.</h3>
+                      </div>
+                      <span class="px-3 py-1.5 rounded-full bg-white text-black font-bold text-xs shrink-0">Live Demo ↗</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Window 2: Flowly CRM SaaS Platform (Index 7) -->
+              <div class="deck-window deck-w2" data-launch-demo="7" data-cursor="LAUNCH SITE ↗">
+                <div class="px-3.5 py-2 bg-[#141923] border-b border-white/10 flex items-center justify-between text-[11px] font-mono text-zinc-400">
+                  <div class="flex items-center gap-1.5">
+                    <span class="w-2.5 h-2.5 rounded-full bg-rose-500/80"></span>
+                    <span class="w-2.5 h-2.5 rounded-full bg-amber-400/80"></span>
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500/80"></span>
+                  </div>
+                  <span class="text-zinc-300">🔒 flowlycrm.app</span>
+                  <span class="px-2 py-0.5 rounded bg-violet-500/20 text-violet-300 text-[10px]">SaaS CRM</span>
+                </div>
+                <div class="relative h-56 overflow-hidden bg-[#0b0918] p-4 flex flex-col justify-between text-white">
+                  <div class="flex items-center justify-between">
+                    <div>
+                      <span class="text-[10px] font-mono uppercase tracking-wider text-violet-400">AI Pipeline Engine</span>
+                      <h4 class="font-display font-bold text-base">Flowly Revenue Cloud</h4>
+                    </div>
+                    <span class="px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 font-mono text-xs font-bold">+148% ARR</span>
+                  </div>
+                  <!-- Mini Animated Bar Chart -->
+                  <div class="grid grid-cols-7 gap-2 items-end h-24 pt-4 px-2 border-b border-white/10">
+                    <div class="bg-violet-500/40 rounded-t h-10"></div>
+                    <div class="bg-violet-500/50 rounded-t h-14"></div>
+                    <div class="bg-violet-500/60 rounded-t h-12"></div>
+                    <div class="bg-violet-500/70 rounded-t h-16"></div>
+                    <div class="bg-violet-500/80 rounded-t h-20"></div>
+                    <div class="bg-violet-400 rounded-t h-18"></div>
+                    <div class="bg-[#d4ff33] rounded-t h-24 shadow-[0_0_15px_#d4ff33]"></div>
+                  </div>
+                  <div class="flex items-center justify-between text-xs text-zinc-400 font-mono">
+                    <span>AUTOMATED FOLLOW-UPS</span>
+                    <span class="text-[#d4ff33] font-bold">Interactive SaaS ↗</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Window 3: Skyline Luxury Realty (Index 3) -->
+              <div class="deck-window deck-w3" data-launch-demo="3" data-cursor="LAUNCH SITE ↗">
+                <div class="px-3.5 py-2 bg-[#141923] border-b border-white/10 flex items-center justify-between text-[11px] font-mono text-zinc-400">
+                  <div class="flex items-center gap-1.5">
+                    <span class="w-2.5 h-2.5 rounded-full bg-rose-500/80"></span>
+                    <span class="w-2.5 h-2.5 rounded-full bg-amber-400/80"></span>
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500/80"></span>
+                  </div>
+                  <span class="text-zinc-300">🔒 skylinerealty.luxury</span>
+                  <span class="px-2 py-0.5 rounded bg-sky-500/20 text-sky-300 text-[10px]">Real Estate</span>
+                </div>
+                <div class="relative h-52 overflow-hidden bg-zinc-900">
+                  <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=900&q=80"
+                       onerror="this.src='https://placehold.co/900x500/082f49/7dd3fc?text=Skyline+Realty'"
+                       alt="Skyline Luxury Realty" class="w-full h-full object-cover opacity-85" />
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent p-4 flex flex-col justify-between">
+                    <div class="flex justify-between items-center">
+                      <span class="px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md text-white font-mono text-[10px]">PALM RESIDENCE · $1.2M</span>
+                      <span class="px-2.5 py-1 rounded-full bg-[#d4ff33] text-black font-mono font-bold text-[10px]">5 BED · POOL</span>
+                    </div>
+                    <div class="flex items-end justify-between">
+                      <div>
+                        <h4 class="text-white font-serif italic text-xl leading-none">Architectural Living</h4>
+                        <p class="text-zinc-300 text-xs mt-1">Click any window to test full website</p>
+                      </div>
+                      <span class="px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-white text-xs font-mono">Tour ↗</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Bottom Hero Telemetry Bar -->
+        <div class="mt-14 pt-8 border-t border-current/10 grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div class="flex items-center gap-3.5">
+            <span class="font-display font-extrabold text-3xl sm:text-4xl" style="color: var(--accent);">11</span>
+            <div class="text-xs font-mono uppercase tracking-wider leading-snug" style="color: var(--mut);">
+              Live Concept Websites<br><span style="color: var(--ink);">Interactive Simulator</span>
+            </div>
+          </div>
+          <div class="flex items-center gap-3.5">
+            <span class="font-display font-extrabold text-3xl sm:text-4xl" style="color: var(--accent);">08</span>
+            <div class="text-xs font-mono uppercase tracking-wider leading-snug" style="color: var(--mut);">
+              Industries Covered<br><span style="color: var(--ink);">Bespoke UI Systems</span>
+            </div>
+          </div>
+          <div class="flex items-center gap-3.5">
+            <span class="font-display font-extrabold text-3xl sm:text-4xl" style="color: var(--accent);">99+</span>
+            <div class="text-xs font-mono uppercase tracking-wider leading-snug" style="color: var(--mut);">
+              Performance Target<br><span style="color: var(--ink);">SEO & Core Vitals</span>
+            </div>
+          </div>
+          <div class="flex items-center gap-3.5">
+            <span class="font-display font-extrabold text-3xl sm:text-4xl" style="color: var(--accent);">100%</span>
+            <div class="text-xs font-mono uppercase tracking-wider leading-snug" style="color: var(--mut);">
+              Responsive Craft<br><span style="color: var(--ink);">Mobile, Tablet & Desktop</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         4. INFINITE KINETIC TICKER
+         ====================================================================== -->
+    <div class="py-5 border-y border-current/10 overflow-hidden select-none" style="background: var(--bg-elevated);">
+      <div id="marquee-track" class="flex items-center gap-10 w-max font-display font-extrabold text-xl sm:text-3xl tracking-tight whitespace-nowrap"></div>
+    </div>
+
+    <!-- ======================================================================
+         5. REALISTIC LIVE WEBSITE SHOWCASE (11 CONCEPT WEBSITES)
+         ====================================================================== -->
+    <section id="work" class="py-24 sm:py-32">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6">
+
+        <!-- Section Header + Search -->
+        <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10 reveal">
+          <div>
+            <div class="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest px-3.5 py-1 rounded-full border border-current/15 mb-4" style="color: var(--accent);">
+              <span>01 // Interactive Production Showcase</span>
+            </div>
+            <h2 class="font-display font-extrabold text-3xl sm:text-5xl md:text-6xl tracking-tight">
+              11 Live Website <em class="shimmer-serif font-normal">Experiences.</em>
+            </h2>
+            <p class="mt-3 text-base sm:text-lg max-w-2xl" style="color: var(--mut);">
+              Every project below is a <strong style="color: var(--ink);">complete, multi-section interactive website</strong> with real imagery, working product/booking widgets, and a responsive viewport switcher. Click any browser card to launch the live site.
+            </p>
+          </div>
+
+          <!-- Search Input -->
+          <div class="w-full lg:w-80">
+            <div class="relative">
+              <input id="project-search" type="search" placeholder="Search 11 websites (e.g. SaaS, Sushi, Villa)..."
+                     class="w-full pl-10 pr-4 py-3 rounded-full text-sm border border-current/15 bg-white/5 focus:outline-none focus:border-[#d4ff33] transition" />
+              <span class="absolute left-4 top-1/2 -translate-y-1/2 text-xs font-mono opacity-60">⌕</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Industry Filter Pills -->
+        <div id="category-filters" class="flex items-center gap-2 overflow-x-auto pb-4 mb-8 no-scrollbar reveal"></div>
+
+        <!-- 11 Realistic Website Browser Cards Grid -->
+        <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7"></div>
+
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         6. BENTO ARCHITECTURE (ABOUT SABITH, MALAPPURAM RADAR & TECH MATRIX)
+         ====================================================================== -->
+    <section id="about" class="py-24 sm:py-32 border-t border-current/10" style="background: var(--bg-elevated);">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6">
+
+        <div class="max-w-3xl mb-14 reveal">
+          <div class="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest px-3.5 py-1 rounded-full border border-current/15 mb-4" style="color: var(--accent);">
+            <span>02 // Engineering & Conviction</span>
+          </div>
+          <h2 class="font-display font-extrabold text-3xl sm:text-5xl md:text-6xl tracking-tight">
+            Honest about where I am. <em class="shimmer-serif font-normal">Serious about the craft.</em>
+          </h2>
+          <p class="mt-4 text-base sm:text-lg leading-relaxed" style="color: var(--mut);">
+            Rather than waiting for permission or showing static mockups, I engineered 11 full-scale interactive concept websites from scratch—proving how I structure architecture, write clean code, and choreograph motion for real businesses.
+          </p>
+        </div>
+
+        <!-- Asymmetric Bento Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+          <!-- Bento Card 1: Malappuram, Kerala Live Radar Telemetry (5 cols) -->
+          <div class="spotlight-card lg:col-span-5 p-7 sm:p-8 flex flex-col justify-between reveal" data-tilt>
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <span class="font-mono text-xs uppercase tracking-widest" style="color: var(--accent);">Base of Operations</span>
+                <h3 class="font-display font-bold text-2xl sm:text-3xl mt-1">Malappuram, Kerala</h3>
+                <p class="text-xs font-mono mt-1" style="color: var(--mut);">11.0510° N, 76.0711° E · India (IST)</p>
+              </div>
+              <span id="bento-ist-clock" class="px-3 py-1.5 rounded-full font-mono text-xs border border-current/15 bg-white/5">
+                IST
+              </span>
+            </div>
+
+            <!-- Animated Radar Visualization -->
+            <div class="my-6 p-5 rounded-2xl bg-black/40 border border-white/10 relative overflow-hidden flex items-center justify-between">
+              <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(#d4ff33 1px, transparent 1px); background-size: 16px 16px;"></div>
+              <div class="relative z-10 space-y-2 max-w-[210px]">
+                <div class="inline-flex items-center gap-2 text-xs font-mono text-emerald-400">
+                  <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                  <span>ACTIVE TELEMETRY</span>
+                </div>
+                <p class="text-xs text-zinc-300 leading-relaxed">
+                  Working with local brands across <strong class="text-white">Kerala (Malappuram, Calicut, Kochi)</strong>, GCC & international startups.
+                </p>
+              </div>
+              <svg class="w-24 h-24 shrink-0 overflow-visible" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(212,255,51,0.16)" stroke-width="1" stroke-dasharray="3 3" />
+                <circle cx="50" cy="50" r="28" fill="none" stroke="rgba(212,255,51,0.25)" stroke-width="1" />
+                <circle cx="50" cy="50" r="18" fill="none" stroke="#d4ff33" stroke-width="1.5" class="radar-wave" />
+                <circle cx="50" cy="50" r="18" fill="none" stroke="#10b981" stroke-width="1.2" class="radar-wave radar-wave-delay" />
+                <circle cx="50" cy="50" r="4.5" fill="#d4ff33" />
+              </svg>
+            </div>
+
+            <div class="flex items-center justify-between text-xs font-mono pt-2 border-t border-current/10" style="color: var(--mut);">
+              <span>LANGUAGES: ENGLISH · MALAYALAM</span>
+              <span class="text-emerald-400 font-semibold">● 24H RESPONSE</span>
+            </div>
+          </div>
+
+          <!-- Bento Card 2: Interactive Tech Stack & Architecture Matrix (7 cols) -->
+          <div class="spotlight-card lg:col-span-7 p-7 sm:p-8 flex flex-col justify-between reveal" style="--d: 0.08s" data-tilt>
+            <div>
+              <div class="flex flex-wrap items-center justify-between gap-2 mb-5">
+                <div>
+                  <span class="font-mono text-xs uppercase tracking-widest" style="color: var(--accent);">11 Core Technologies</span>
+                  <h3 class="font-display font-bold text-2xl sm:text-3xl mt-1">Interactive Engineering Toolkit</h3>
+                </div>
+                <span class="text-xs font-mono px-3 py-1 rounded-full border border-current/15 bg-white/5">
+                  Click any skill to inspect
+                </span>
+              </div>
+
+              <!-- Interactive Skill Pills -->
+              <div id="skills-matrix" class="flex flex-wrap gap-2.5 mb-6"></div>
+            </div>
+
+            <!-- Live Skill Inspector Console -->
+            <div class="p-4 sm:p-5 rounded-2xl bg-black/45 border border-white/10 font-mono text-xs space-y-2">
+              <div class="flex items-center justify-between text-zinc-400">
+                <span id="skill-console-title" class="text-[#d4ff33] font-bold">MODULE // REACT & MODERN JS</span>
+                <span id="skill-console-level" class="px-2 py-0.5 rounded bg-white/10 text-white">PRODUCTION READY</span>
+              </div>
+              <p id="skill-console-desc" class="text-zinc-300 leading-relaxed font-sans text-sm">
+                Component-driven UI architecture, state management, smooth 60fps DOM interactions, and clean API integration.
+              </p>
+            </div>
+          </div>
+
+          <!-- Bento Card 3: Core Web Vitals & Lighthouse Guarantee (7 cols) -->
+          <div class="spotlight-card lg:col-span-7 p-7 sm:p-8 flex flex-col justify-between reveal" style="--d: 0.12s" data-tilt>
+            <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+              <div>
+                <span class="font-mono text-xs uppercase tracking-widest" style="color: var(--accent);">Speed & Optimization</span>
+                <h3 class="font-display font-bold text-2xl sm:text-3xl mt-1">Engineered for 99+ Lighthouse Scores</h3>
+              </div>
+              <span class="px-3 py-1 rounded-full bg-emerald-500/15 text-emerald-400 font-mono text-xs font-bold">
+                ● Core Web Vitals Passed
+              </span>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 my-2">
+              <div class="p-4 rounded-2xl bg-black/30 border border-white/10 text-center">
+                <div class="font-display font-extrabold text-3xl text-[#d4ff33]">99</div>
+                <div class="font-mono text-[11px] uppercase tracking-wider mt-1 opacity-75">Performance</div>
+              </div>
+              <div class="p-4 rounded-2xl bg-black/30 border border-white/10 text-center">
+                <div class="font-display font-extrabold text-3xl text-emerald-400">100</div>
+                <div class="font-mono text-[11px] uppercase tracking-wider mt-1 opacity-75">Accessibility</div>
+              </div>
+              <div class="p-4 rounded-2xl bg-black/30 border border-white/10 text-center">
+                <div class="font-display font-extrabold text-3xl text-emerald-400">100</div>
+                <div class="font-mono text-[11px] uppercase tracking-wider mt-1 opacity-75">Best Practices</div>
+              </div>
+              <div class="p-4 rounded-2xl bg-black/30 border border-white/10 text-center">
+                <div class="font-display font-extrabold text-3xl text-[#d4ff33]">100</div>
+                <div class="font-mono text-[11px] uppercase tracking-wider mt-1 opacity-75">On-Page SEO</div>
+              </div>
+            </div>
+
+            <p class="text-xs sm:text-sm mt-4" style="color: var(--mut);">
+              Clean semantic HTML5, zero-bloat CSS, hardware-accelerated transforms, and responsive breakpoints tested from 320px mobile to 4K displays.
+            </p>
+          </div>
+
+          <!-- Bento Card 4: Experience & Direct Commitment (5 cols) -->
+          <div class="spotlight-card lg:col-span-5 p-7 sm:p-8 flex flex-col justify-between reveal" style="--d: 0.16s; background: linear-gradient(145deg, rgba(var(--accent-rgb), 0.16), var(--surface-solid));" data-tilt>
+            <div>
+              <span class="font-mono text-xs uppercase tracking-widest" style="color: var(--accent);">Direct Developer Partnership</span>
+              <div class="font-display font-extrabold text-5xl sm:text-6xl mt-2" style="color: var(--accent);">1+ Year</div>
+              <div class="font-display font-bold text-xl mt-1">Focused Web Development Craft</div>
+            </div>
+            <p class="text-sm leading-relaxed my-4" style="color: var(--mut);">
+              You work directly with me—from initial Figma-to-code prototyping to final deployment. Fast communication, transparent pricing, and zero agency overhead.
+            </p>
+            <a href="#contact" class="inline-flex items-center justify-between px-5 py-3.5 rounded-2xl font-display font-bold text-sm transition"
+               style="background: var(--accent); color: var(--accent-ink);">
+              <span>Book Your Website Build</span>
+              <span>→</span>
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         7. INTERACTIVE SERVICES & LIVE VISUAL PREVIEW DECK
+         ====================================================================== -->
+    <section id="services" class="py-24 sm:py-32">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6">
+
+        <div class="max-w-2xl mb-14 reveal">
+          <div class="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest px-3.5 py-1 rounded-full border border-current/15 mb-4" style="color: var(--accent);">
+            <span>03 // Capabilities & Deliverables</span>
+          </div>
+          <h2 class="font-display font-extrabold text-3xl sm:text-5xl md:text-6xl tracking-tight">
+            What I can <em class="shimmer-serif font-normal">build for you.</em>
+          </h2>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          <!-- Left Interactive Service Rows (7 cols) -->
+          <div id="services-list" class="lg:col-span-7 divide-y divide-current/10 border-y border-current/10"></div>
+
+          <!-- Right Sticky Service Preview Card (5 cols) -->
+          <div class="lg:col-span-5 lg:sticky lg:top-28">
+            <div class="spotlight-card p-5 sm:p-6">
+              <div class="relative h-60 rounded-2xl overflow-hidden mb-5 bg-zinc-900">
+                <img id="service-preview-img"
+                     src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=900&q=80"
+                     onerror="this.src='https://placehold.co/900x500/0f172a/d4ff33?text=Web+Engineering'"
+                     alt="Service Preview" class="w-full h-full object-cover transition-all duration-500" />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent p-4 flex flex-col justify-end">
+                  <span id="service-preview-tag" class="font-mono text-[11px] uppercase tracking-widest text-[#d4ff33]">01 // BUSINESS WEBSITES</span>
+                  <h3 id="service-preview-title" class="font-display font-bold text-2xl text-white mt-0.5">Business Websites</h3>
+                </div>
+              </div>
+              <p id="service-preview-desc" class="text-sm leading-relaxed mb-5" style="color: var(--mut);">
+                Credible, fast websites engineered to turn visitors into paying clients with clear positioning, social proof, and instant lead capture.
+              </p>
+              <div id="service-preview-pills" class="flex flex-wrap gap-2 mb-6"></div>
+              <a href="#contact" class="w-full py-3.5 rounded-xl font-display font-bold text-sm flex items-center justify-center gap-2 transition"
+                 style="background: var(--accent); color: var(--accent-ink);">
+                <span>Request Quote for This Service</span>
+                <span>↗</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         8. 4-STAGE EXECUTION PROCESS
+         ====================================================================== -->
+    <section id="process" class="py-24 sm:py-32 border-t border-current/10" style="background: var(--bg-elevated);">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <div class="max-w-2xl mb-14 reveal">
+          <div class="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest px-3.5 py-1 rounded-full border border-current/15 mb-4" style="color: var(--accent);">
+            <span>04 // Execution Roadmap</span>
+          </div>
+          <h2 class="font-display font-extrabold text-3xl sm:text-5xl md:text-6xl tracking-tight">
+            How we’ll <em class="shimmer-serif font-normal">work together.</em>
+          </h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div class="spotlight-card p-7 flex flex-col justify-between reveal" data-tilt>
+            <div>
+              <div class="flex items-center justify-between mb-6">
+                <span class="font-display font-extrabold text-4xl" style="color: var(--accent);">01</span>
+                <span class="font-mono text-xs px-2.5 py-1 rounded-full border border-current/15">Day 1–2</span>
+              </div>
+              <h3 class="font-display font-bold text-2xl mb-2">Discovery</h3>
+              <p class="text-sm leading-relaxed" style="color: var(--mut);">
+                You share your business goals, target audience, and favorite references. I reply within 24 hours with a clear sitemap and project scope.
+              </p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-current/10 font-mono text-[11px] uppercase tracking-wider opacity-70">
+              Deliverable: Strategy & Wireframe
+            </div>
+          </div>
+
+          <div class="spotlight-card p-7 flex flex-col justify-between reveal" style="--d: 0.08s" data-tilt>
+            <div>
+              <div class="flex items-center justify-between mb-6">
+                <span class="font-display font-extrabold text-4xl" style="color: var(--accent);">02</span>
+                <span class="font-mono text-xs px-2.5 py-1 rounded-full border border-current/15">Day 3–5</span>
+              </div>
+              <h3 class="font-display font-bold text-2xl mb-2">Design</h3>
+              <p class="text-sm leading-relaxed" style="color: var(--mut);">
+                I design your key pages with modern typography, bespoke color direction, and interactive prototypes for your feedback before full build.
+              </p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-current/10 font-mono text-[11px] uppercase tracking-wider opacity-70">
+              Deliverable: High-Fidelity UI
+            </div>
+          </div>
+
+          <div class="spotlight-card p-7 flex flex-col justify-between reveal" style="--d: 0.16s" data-tilt>
+            <div>
+              <div class="flex items-center justify-between mb-6">
+                <span class="font-display font-extrabold text-4xl" style="color: var(--accent);">03</span>
+                <span class="font-mono text-xs px-2.5 py-1 rounded-full border border-current/15">Day 6–12</span>
+              </div>
+              <h3 class="font-display font-bold text-2xl mb-2">Build</h3>
+              <p class="text-sm leading-relaxed" style="color: var(--mut);">
+                Responsive, fast, clean code engineered with smooth GSAP/CSS animations, interactive components, and essential on-page SEO.
+              </p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-current/10 font-mono text-[11px] uppercase tracking-wider opacity-70">
+              Deliverable: Live Staging Link
+            </div>
+          </div>
+
+          <div class="spotlight-card p-7 flex flex-col justify-between reveal" style="--d: 0.24s" data-tilt>
+            <div>
+              <div class="flex items-center justify-between mb-6">
+                <span class="font-display font-extrabold text-4xl" style="color: var(--accent);">04</span>
+                <span class="font-mono text-xs px-2.5 py-1 rounded-full border border-current/15">Final Step</span>
+              </div>
+              <h3 class="font-display font-bold text-2xl mb-2">Launch</h3>
+              <p class="text-sm leading-relaxed" style="color: var(--mut);">
+                Cross-device QA testing, custom domain deployment, SSL setup, and a complete handover so you can run your site confidently.
+              </p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-current/10 font-mono text-[11px] uppercase tracking-wider opacity-70">
+              Deliverable: Production Launch
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         9. EXECUTIVE PROJECT CONFIGURATOR & CONTACT HUB
+         ====================================================================== -->
+    <section id="contact" class="py-24 sm:py-32">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <div class="spotlight-card p-7 sm:p-12 lg:p-16 reveal">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start relative z-10">
+
+            <!-- Left Column: Direct Channels & Malappuram Studio Info (5 cols) -->
+            <div class="lg:col-span-5 space-y-6">
+              <div class="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest px-3.5 py-1 rounded-full border border-current/15" style="color: var(--accent);">
+                <span>05 // Initiate Collaboration</span>
+              </div>
+              <h2 class="font-display font-extrabold text-3xl sm:text-5xl tracking-tight leading-tight">
+                Let’s build your <em class="shimmer-serif font-normal">website.</em>
+              </h2>
+              <p class="text-base leading-relaxed" style="color: var(--mut);">
+                Tell me about your project. I’ll reply within 24 hours with tailored ideas, a realistic timeline, and a transparent quote.
+              </p>
+
+              <!-- Direct Contact Cards -->
+              <div class="space-y-3.5 pt-2">
+                <!-- Email + 1-Click Copy -->
+                <div class="p-4 rounded-2xl border border-current/10 bg-white/5 flex items-center justify-between gap-3">
+                  <a href="mailto:saabi1th@outlook.com" class="flex items-center gap-3.5 min-w-0">
+                    <div class="w-11 h-11 rounded-xl flex items-center justify-center font-mono font-bold text-sm shrink-0"
+                         style="background: var(--accent); color: var(--accent-ink);">
+                      @
+                    </div>
+                    <div class="truncate">
+                      <span class="block font-mono text-[10px] uppercase tracking-wider opacity-60">Direct Email</span>
+                      <span class="font-bold text-sm sm:text-base truncate">saabi1th@outlook.com</span>
+                    </div>
+                  </a>
+                  <button id="copy-email" type="button"
+                          class="px-3.5 py-2 rounded-xl font-mono text-xs font-bold border border-current/15 hover:bg-white/10 transition shrink-0">
+                    Copy
+                  </button>
+                </div>
+
+                <!-- Instagram -->
+                <a href="https://instagram.com/saabiith.h" target="_blank" rel="noopener"
+                   class="p-4 rounded-2xl border border-current/10 bg-white/5 hover:border-[#d4ff33] transition flex items-center justify-between gap-3 group">
+                  <div class="flex items-center gap-3.5">
+                    <div class="w-11 h-11 rounded-xl flex items-center justify-center font-mono font-bold text-sm bg-gradient-to-tr from-amber-500 via-pink-500 to-purple-600 text-white">
+                      IG
+                    </div>
+                    <div>
+                      <span class="block font-mono text-[10px] uppercase tracking-wider opacity-60">Instagram DM</span>
+                      <span class="font-bold text-sm sm:text-base">@saabiith.h</span>
+                    </div>
+                  </div>
+                  <span class="font-mono text-xs opacity-60 group-hover:opacity-100 group-hover:translate-x-1 transition">Message ↗</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- Right Column: Interactive Project Brief Form (7 cols) -->
+            <div class="lg:col-span-7">
+              <form id="contact-form" class="p-6 sm:p-8 rounded-3xl border border-current/10 bg-black/25 grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div>
+                  <label for="f-name" class="block font-mono text-xs uppercase tracking-wider mb-2 opacity-80">Your Name</label>
+                  <input id="f-name" required autocomplete="name" placeholder="Jane Cooper / Rahul Nair"
+                         class="w-full px-4 py-3.5 rounded-xl border border-current/15 bg-white/5 focus:outline-none focus:border-[#d4ff33] text-sm transition" />
+                </div>
+
+                <div>
+                  <label for="f-email" class="block font-mono text-xs uppercase tracking-wider mb-2 opacity-80">Email Address</label>
+                  <input id="f-email" type="email" required autocomplete="email" placeholder="you@company.com"
+                         class="w-full px-4 py-3.5 rounded-xl border border-current/15 bg-white/5 focus:outline-none focus:border-[#d4ff33] text-sm transition" />
+                </div>
+
+                <div>
+                  <label for="f-type" class="block font-mono text-xs uppercase tracking-wider mb-2 opacity-80">Project Type</label>
+                  <select id="f-type" class="w-full px-4 py-3.5 rounded-xl border border-current/15 bg-[#0c1018] text-white focus:outline-none focus:border-[#d4ff33] text-sm transition">
+                    <option>Business website</option>
+                    <option>E-commerce store</option>
+                    <option>Real estate</option>
+                    <option>Restaurant / cafe</option>
+                    <option>Healthcare</option>
+                    <option>SaaS landing page</option>
+                    <option>Education</option>
+                    <option>Portfolio / creative</option>
+                    <option>Something else</option>
+                  </select>
+                </div>
+
+                <div>
+                  <div class="flex items-center justify-between mb-2">
+                    <label for="f-budget" class="font-mono text-xs uppercase tracking-wider opacity-80">Estimated Budget</label>
+                    <div class="inline-flex rounded-full border border-current/15 p-0.5 text-[10px] font-mono">
+                      <button type="button" data-cur="inr" class="cur-toggle px-2 py-0.5 rounded-full font-bold" style="background: var(--accent); color: var(--accent-ink);">₹ INR</button>
+                      <button type="button" data-cur="usd" class="cur-toggle px-2 py-0.5 rounded-full opacity-70">$ USD</button>
+                    </div>
+                  </div>
+                  <select id="f-budget" class="w-full px-4 py-3.5 rounded-xl border border-current/15 bg-[#0c1018] text-white focus:outline-none focus:border-[#d4ff33] text-sm transition"></select>
+                </div>
+
+                <div class="sm:col-span-2">
+                  <label for="f-msg" class="block font-mono text-xs uppercase tracking-wider mb-2 opacity-80">About Your Project</label>
+                  <textarea id="f-msg" rows="4" required placeholder="Which demo style did you like most? What are your goals and launch timeline?"
+                            class="w-full px-4 py-3.5 rounded-xl border border-current/15 bg-white/5 focus:outline-none focus:border-[#d4ff33] text-sm transition"></textarea>
+                </div>
+
+                <div class="sm:col-span-2 flex flex-wrap items-center justify-between gap-4 pt-2">
+                  <button type="submit" data-cursor="SEND ↗"
+                          class="magnetic px-8 py-4 rounded-full font-display font-bold text-sm transition flex items-center gap-2 shadow-xl"
+                          style="background: var(--accent); color: var(--accent-ink);">
+                    <span>Send Project Inquiry</span>
+                    <span>→</span>
+                  </button>
+                  <span class="font-mono text-xs opacity-65">Direct to saabi1th@outlook.com</span>
+                </div>
+
+                <div id="form-status" role="status" class="hidden sm:col-span-2 p-4 rounded-2xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-sm">
+                  ✓ Your email app is opening with your project brief ready to send to Muhammed Sabith. Thank you!
+                </div>
+              </form>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ========================================================================
+       10. ARCHITECTURAL FOOTER
+       ======================================================================== -->
+  <footer class="pt-12 pb-10 px-4 sm:px-6 border-t border-current/10 overflow-hidden relative z-10">
+    <div class="max-w-7xl mx-auto">
+      <div class="font-display font-extrabold text-center leading-none select-none pointer-events-none mb-8"
+           style="font-size: clamp(54px, 16vw, 220px); -webkit-text-stroke: 1.5px var(--line); color: transparent; letter-spacing: -0.04em;">
+        MUHAMMED SABITH
+      </div>
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono" style="color: var(--mut);">
+        <div>© <span id="footer-year"></span> Muhammed Sabith · Crafted in Malappuram, Kerala</div>
+        <div class="flex items-center gap-6">
+          <a href="mailto:saabi1th@outlook.com" class="hover:underline">saabi1th@outlook.com</a>
+          <a href="https://instagram.com/saabiith.h" target="_blank" rel="noopener" class="hover:underline">@saabiith.h</a>
+          <a href="#top" class="hover:underline">Back to Top ↑</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========================================================================
+       11. FULL-SCREEN LIVE WEBSITE BROWSER SIMULATOR MODAL
+       ======================================================================== -->
+  <div id="sim-modal" role="dialog" aria-modal="true" aria-label="Live Interactive Website Simulator">
+    <div class="sim-shell">
+
+      <!-- Top Browser Chrome Bar -->
+      <div class="px-4 py-3 bg-[#0e121b] border-b border-white/10 flex flex-wrap items-center justify-between gap-3 text-white">
+        <!-- Left: Window Controls & Prev/Next Project Switcher -->
+        <div class="flex items-center gap-3">
+          <div class="flex items-center gap-1.5">
+            <button id="sim-close-dot" type="button" class="w-3 h-3 rounded-full bg-rose-500 hover:opacity-80 transition" title="Close Simulator"></button>
+            <span class="w-3 h-3 rounded-full bg-amber-400"></span>
+            <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
+          </div>
+          <div class="flex items-center gap-1 ml-2">
+            <button id="sim-prev" type="button" class="px-2.5 py-1 rounded-lg bg-white/5 hover:bg-white/15 font-mono text-xs transition" title="Previous Website">← Prev</button>
+            <span id="sim-counter" class="font-mono text-xs px-2 text-zinc-400">1 / 11</span>
+            <button id="sim-next" type="button" class="px-2.5 py-1 rounded-lg bg-white/5 hover:bg-white/15 font-mono text-xs transition" title="Next Website">Next →</button>
+          </div>
+        </div>
+
+        <!-- Center: Realistic SSL URL Bar -->
+        <div class="flex-1 max-w-md mx-auto hidden md:flex items-center justify-between px-3.5 py-1.5 rounded-xl bg-black/50 border border-white/10 font-mono text-xs">
+          <div class="flex items-center gap-2 truncate">
+            <span class="text-emerald-400">🔒</span>
+            <span id="sim-url" class="text-zinc-200 truncate">https://novaconsulting.io</span>
+          </div>
+          <span id="sim-badge" class="text-[10px] px-2 py-0.5 rounded bg-white/10 text-zinc-300 ml-2 shrink-0">Business</span>
+        </div>
+
+        <!-- Right: Responsive Viewport Switcher & Hire Action -->
+        <div class="flex items-center gap-2">
+          <div class="inline-flex rounded-xl bg-black/40 p-1 border border-white/10 text-xs font-mono">
+            <button type="button" data-vp="desktop" class="vp-btn px-2.5 py-1 rounded-lg bg-[#d4ff33] text-black font-bold transition">Desktop</button>
+            <button type="button" data-vp="tablet" class="vp-btn px-2.5 py-1 rounded-lg text-zinc-400 hover:text-white transition">Tablet</button>
+            <button type="button" data-vp="mobile" class="vp-btn px-2.5 py-1 rounded-lg text-zinc-400 hover:text-white transition">Mobile</button>
+          </div>
+
+          <button id="sim-hire-btn" type="button"
+                  class="hidden sm:inline-flex px-3.5 py-1.5 rounded-xl bg-[#d4ff33] text-black font-display font-bold text-xs hover:brightness-110 transition">
+            Want a site like this? ↗
+          </button>
+
+          <button id="sim-close" type="button" aria-label="Close Simulator"
+                  class="w-8 h-8 rounded-xl bg-white/10 hover:bg-rose-500 hover:text-white flex items-center justify-center font-bold text-sm transition">
+            ✕
+          </button>
+        </div>
+      </div>
+
+      <!-- Center Scrollable Website Viewport -->
+      <div id="sim-canvas-wrap" class="sim-canvas-wrap">
+        <div id="sim-frame"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Floating Toast Notification -->
+  <div id="toast" class="fixed bottom-6 right-6 z-[150] pointer-events-none translate-y-12 opacity-0 transition-all duration-300">
+    <div class="px-4 py-3 rounded-2xl border border-[#d4ff33]/40 bg-[#080c12] text-white shadow-2xl flex items-center gap-3 text-xs sm:text-sm font-semibold">
+      <span class="w-5 h-5 rounded-full bg-[#d4ff33] text-black flex items-center justify-center font-bold text-xs">✓</span>
+      <span id="toast-msg">Copied to clipboard!</span>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       12. COMPLETE APPLICATION & REALISTIC WEBSITE ENGINE (JAVASCRIPT)
+       ======================================================================== -->
+  <script>
+    const $ = s => document.querySelector(s);
+    const $$ = s => [...document.querySelectorAll(s)];
+    const EMAIL = "saabi1th@outlook.com";
+
+    /* ------------------------------------------------------------------------
+       1. WEBAUDIO HARMONIC SOUND SYNTHESIZER
+       ------------------------------------------------------------------------ */
+    let audioOn = true;
+    let audioCtx = null;
+
+    function playSynth(freq = 480, type = 'sine', dur = 0.08, vol = 0.022) {
+      if (!audioOn) return;
+      try {
+        if (!audioCtx) {
+          const AC = window.AudioContext || window.webkitAudioContext;
+          if (!AC) return;
+          audioCtx = new AC();
+        }
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.0001, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(vol, audioCtx.currentTime + 0.015);
+        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + dur);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + dur + 0.01);
+      } catch (e) {}
+    }
+
+    $("#sfx-toggle").onclick = () => {
+      audioOn = !audioOn;
+      $("#sfx-dot").className = `w-2 h-2 rounded-full ${audioOn ? 'bg-[#d4ff33]' : 'bg-zinc-500'}`;
+      $("#sfx-text").textContent = audioOn ? "AUDIO ON" : "MUTED";
+      if (audioOn) playSynth(620, 'triangle', 0.12, 0.03);
+    };
+
+    /* ------------------------------------------------------------------------
+       2. MULTI-THEME SWITCHER (OBSIDIAN PRO / TITANIUM LIGHT / MIDNIGHT EMERALD)
+       ------------------------------------------------------------------------ */
+    $$("[data-theme-btn]").forEach(btn => {
+      btn.onclick = () => {
+        const t = btn.dataset.themeBtn;
+        document.documentElement.setAttribute("data-theme", t);
+        $$(".theme-pill").forEach(p => {
+          const active = p === btn;
+          p.classList.toggle("ring-2", active);
+          p.classList.toggle("ring-white", active);
+          p.classList.toggle("opacity-60", !active);
+        });
+        playSynth(540, 'sine', 0.1, 0.028);
+      };
+    });
+
+    /* ------------------------------------------------------------------------
+       3. ALL 11 PROJECTS RE-ENGINEERED WITH CURATED UNSPLASH PHOTOGRAPHY & DATA
+       ------------------------------------------------------------------------ */
+    const PROJECTS = [
+      {
+        id: 0,
+        name: "Nova Consulting",
+        category: "Business",
+        domain: "novaconsulting.io",
+        accent: "#2563eb",
+        accentSoft: "#dbeafe",
+        mode: "light",
+        tagline: "Strategy firm for growing companies",
+        headline: "Grow your business with clear strategy.",
+        subhead: "Executive advisory, full-funnel growth audits, and board-ready financial modeling for ambitious enterprises.",
+        heroImg: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80",
+        badgeText: "AVG CLIENT ROI +310%",
+        ctaText: "Book Strategy Sprint",
+        actionLabel: "Reserve Sprint",
+        addedLabel: "✓ Sprint Reserved",
+        drawerTitle: "Reserved Advisory Sprints",
+        sectionTitle: "Executive Consulting Programs",
+        stack: ["React", "Tailwind CSS", "GSAP"],
+        metrics: [["$140M+", "Client Value Created"], ["6 Weeks", "Strategy Sprint"], ["98.4%", "Executive Retention"]],
+        quote: ["Nova restructured our entire enterprise go-to-market funnel. Qualified pipeline doubled in 45 days.", "Marcus Vance — VP of Growth, Vertex Global"],
+        items: [
+          { title: "Market Strategy", sub: "6-week executive sprint", price: "$2,400", numPrice: 2400, tag: "Most Popular", img: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=700&q=80" },
+          { title: "Growth Audit", sub: "Full conversion funnel review", price: "$1,200", numPrice: 1200, tag: "Rapid Audit", img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=700&q=80" },
+          { title: "Leadership Coaching", sub: "Monthly 1:1 executive advisory", price: "$600", numPrice: 600, tag: "C-Suite", img: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=700&q=80" },
+          { title: "Quarterly Reports", sub: "Board-ready KPI intelligence", price: "$900", numPrice: 900, tag: "Analytics", img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: 1,
+        name: "Lumen Store",
+        category: "E-Commerce",
+        domain: "lumenbeauty.co",
+        accent: "#be185d",
+        accentSoft: "#fce7f3",
+        mode: "editorial",
+        tagline: "Beauty and skincare shop",
+        headline: "Skincare that loves your skin.",
+        subhead: "Dermatologist-formulated botanical serums and barrier-repair hydrators crafted for radiant, glass-skin luminosity.",
+        heroImg: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=1200&q=80",
+        badgeText: "DERMATOLOGIST TESTED · 4.9★",
+        ctaText: "Shop Botanicals",
+        actionLabel: "Add to Bag",
+        addedLabel: "✓ In Shopping Bag",
+        drawerTitle: "Your Lumen Shopping Bag",
+        sectionTitle: "Clinical Botanical Best-Sellers",
+        stack: ["React", "Commerce UI", "Tailwind"],
+        metrics: [["48 Hours", "Deep Barrier Hydration"], ["100% Vegan", "Clean Formulation"], ["12,400+", "5-Star Reviews"]],
+        quote: ["The Glow Serum completely transformed my morning routine. And the online checkout took less than 15 seconds.", "Elena Rostova — Verified Buyer"],
+        items: [
+          { title: "Glow Serum 30ml", sub: "15% Vitamin C + Ferulic", price: "$34", numPrice: 34, tag: "Best Seller", img: "https://images.unsplash.com/photo-1608248597359-0e6d526a6c58?auto=format&fit=crop&w=700&q=80" },
+          { title: "Hydra Cream", sub: "48h ceramide moisture barrier", price: "$28", numPrice: 28, tag: " Dry Skin", img: "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=700&q=80" },
+          { title: "Rose Mist", sub: "Organic Damascus calming toner", price: "$18", numPrice: 18, tag: "Refreshing", img: "https://images.unsplash.com/photo-1571781926291-c477ebfd024b?auto=format&fit=crop&w=700&q=80" },
+          { title: "Clay Cleanser", sub: "Kaolin deep pore purifying wash", price: "$22", numPrice: 22, tag: "Detox", img: "https://images.unsplash.com/photo-1556228578-0d85b1a4d571?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: 2,
+        name: "Stride Sneakers",
+        category: "E-Commerce",
+        domain: "stridesneakers.store",
+        accent: "#ea580c",
+        accentSoft: "#ffedd5",
+        mode: "dark",
+        tagline: "Limited-drop sneaker store",
+        headline: "Fresh drops. Zero compromise.",
+        subhead: "Carbon-plated street runners and waterproof trail silhouettes engineered for maximum energy return.",
+        heroImg: "https://images.unsplash.com/photo-1552346154-21d32810aba3?auto=format&fit=crop&w=1200&q=80",
+        badgeText: "LIMITED DROP // EDITION 04",
+        ctaText: "Shop Drop 04",
+        actionLabel: "Add to Bag",
+        addedLabel: "✓ Added to Bag",
+        drawerTitle: "Your Stride Drop Bag",
+        sectionTitle: "Limited Release Footwear",
+        stack: ["JavaScript", "Tailwind CSS", "GSAP"],
+        metrics: [["210g", "Featherweight Carbon"], ["100%", "Authenticity Verified"], ["24h", "Express Dispatch"]],
+        quote: ["The Aero Runner feels weightless on asphalt, and the live size selector on the store made copping effortless.", "Devon Brooks — Marathoner & Collector"],
+        items: [
+          { title: "Aero Runner", sub: "Men’s · 6 colorways", price: "$129", numPrice: 129, tag: "Drop 04", img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=700&q=80" },
+          { title: "Trail Max", sub: "Gore-Tex Waterproof Grip", price: "$149", numPrice: 149, tag: "All-Terrain", img: "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?auto=format&fit=crop&w=700&q=80" },
+          { title: "Cloud Low", sub: "Unisex everyday silhouette", price: "$99", numPrice: 99, tag: "Essential", img: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&w=700&q=80" },
+          { title: "Pro Socks 3-Pack", sub: "Arch-compression cushioned", price: "$24", numPrice: 24, tag: "Accessory", img: "https://images.unsplash.com/photo-1586350977771-b3b0abd50c82?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: 3,
+        name: "Skyline Realty",
+        category: "Real Estate",
+        domain: "skylinerealty.luxury",
+        accent: "#0284c7",
+        accentSoft: "#e0f2fe",
+        mode: "editorial",
+        tagline: "Luxury property listings",
+        headline: "Find the home you’ll love.",
+        subhead: "Curated architectural villas, glass penthouses, and waterfront estates with private concierge viewings.",
+        heroImg: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=80",
+        badgeText: "CURATED ARCHITECTURAL ESTATES",
+        ctaText: "Explore Residences",
+        actionLabel: "Book Private Tour",
+        addedLabel: "✓ Viewing Requested",
+        drawerTitle: "Scheduled Property Viewings",
+        sectionTitle: "Featured Architectural Listings",
+        stack: ["React", "UI/UX", "API Integration"],
+        metrics: [["$420M+", "Portfolio Volume"], ["140+", "Exclusive Estates"], ["24/7", "Private Concierge"]],
+        quote: ["We scheduled three private villa viewings straight from our phone and closed on Maple Villa within two weeks.", "Aarav & Priya Menon — Homeowners"],
+        items: [
+          { title: "Maple Villa", sub: "4 Bed · 3 Bath · 4,200 SqFt", price: "$845,000", numPrice: 845000, tag: "Beverly Hills", img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=700&q=80" },
+          { title: "Skyview Loft", sub: "2 Bed · 2 Bath · Skyline Terrace", price: "$3,200/mo", numPrice: 3200, tag: "Penthouse", img: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=700&q=80" },
+          { title: "Oak Cottage", sub: "3 Bed · Private Botanical Garden", price: "$520,000", numPrice: 520000, tag: "Sanctuary", img: "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=700&q=80" },
+          { title: "Palm Residence", sub: "5 Bed · Infinity Pool & Dock", price: "$1.2M", numPrice: 1200000, tag: "Waterfront", img: "https://images.unsplash.com/photo-1613977257363-707ba9348227?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: 4,
+        name: "Bean & Bloom",
+        category: "Food & Cafe",
+        domain: "beanandbloom.cafe",
+        accent: "#92400e",
+        accentSoft: "#fef3c7",
+        mode: "editorial",
+        tagline: "Specialty coffee and brunch cafe",
+        headline: "Slow mornings, great coffee.",
+        subhead: "Small-batch single-origin espresso, 6am laminated sourdough pastries, and sun-drenched botanical seating.",
+        heroImg: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1200&q=80",
+        badgeText: "ROASTED FRESH DAILY · 6AM",
+        ctaText: "Order From Menu",
+        actionLabel: "Add to Order",
+        addedLabel: "✓ Added to Table",
+        drawerTitle: "Your Cafe Table Order",
+        sectionTitle: "Artisanal Roasts & Brunch",
+        stack: ["HTML5", "CSS3", "JavaScript"],
+        metrics: [["100%", "Single-Origin Arabica"], ["6:00 AM", "Fresh Bakery Batch"], ["4.9★", "Local Cafe Rating"]],
+        quote: ["Pre-ordering our Flat Whites and Basque Cheesecake before walking in saves us 15 minutes every morning.", "Sophia Lindqvist — Regular Guest"],
+        items: [
+          { title: "Flat White", sub: "Ethiopian single-origin double shot", price: "$4.50", numPrice: 4.5, tag: "Barista Pick", img: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=700&q=80" },
+          { title: "Butter Croissant", sub: "French cultured butter · Baked 6am", price: "$3.80", numPrice: 3.8, tag: "Warm Batch", img: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=700&q=80" },
+          { title: "Avocado Toast", sub: "Country sourdough · Poached egg", price: "$9.00", numPrice: 9, tag: "Brunch", img: "https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=700&q=80" },
+          { title: "Basque Cheesecake", sub: "Caramelized crust · House special", price: "$7.00", numPrice: 7, tag: "Signature", img: "https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: 5,
+        name: "Sakura Sushi",
+        category: "Food & Cafe",
+        domain: "sakurasushi.jp",
+        accent: "#e11d48",
+        accentSoft: "#ffe4e6",
+        mode: "dark",
+        tagline: "Japanese dining and delivery",
+        headline: "Fresh sushi, made to order.",
+        subhead: "Tokyo-trained omakase craftsmanship, line-caught Atlantic salmon nigiri, and rich 18-hour tonkotsu broth.",
+        heroImg: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=1200&q=80",
+        badgeText: "OMAKASE GRADE · EXPRESS DELIVERY",
+        ctaText: "Explore Omakase Menu",
+        actionLabel: "Add to Order",
+        addedLabel: "✓ In Order Tray",
+        drawerTitle: "Your Sakura Order Tray",
+        sectionTitle: "Chef’s Signature Selection",
+        stack: ["React", "Tailwind CSS", "UI/UX"],
+        metrics: [["Daily", "Tsukiji Market Sourcing"], ["28 Min", "Avg Delivery Time"], ["4.95★", "Diner Satisfaction"]],
+        quote: ["Our online takeout orders doubled in the first month after launching the new interactive menu.", "Kenji Takahashi — Executive Chef"],
+        items: [
+          { title: "Salmon Nigiri", sub: "8 pieces · Torch-seared belly", price: "$14", numPrice: 14, tag: "Chef’s Cut", img: "https://images.unsplash.com/photo-1617196034796-73dfa7b1fd56?auto=format&fit=crop&w=700&q=80" },
+          { title: "Bento Box", sub: "Chef’s pick · Tempura & sashimi", price: "$19", numPrice: 19, tag: "Complete Meal", img: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=700&q=80" },
+          { title: "Tonkotsu Ramen", sub: "18-hour rich broth · Chashu pork", price: "$16", numPrice: 16, tag: "Hot Broth", img: "https://images.unsplash.com/photo-1557872943-16a5ac26437e?auto=format&fit=crop&w=700&q=80" },
+          { title: "Mochi Trio", sub: "Matcha, mango & black sesame", price: "$8", numPrice: 8, tag: "Dessert", img: "https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: 6,
+        name: "CarePlus Clinic",
+        category: "Healthcare",
+        domain: "careplusclinic.med",
+        accent: "#0d9488",
+        accentSoft: "#ccfbf1",
+        mode: "light",
+        tagline: "Multi-specialty clinic booking",
+        headline: "Quality care, booked in a minute.",
+        subhead: "Board-certified specialists, zero-wait digital check-ins, and 24-hour diagnostic lab results under one roof.",
+        heroImg: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1200&q=80",
+        badgeText: "INSTANT DOCTOR SLOTS AVAILABLE",
+        ctaText: "Book Appointment",
+        actionLabel: "Select Slot",
+        addedLabel: "✓ Slot Selected",
+        drawerTitle: "Your Appointment Request",
+        sectionTitle: "Specialists & Diagnostics",
+        stack: ["React", "Tailwind CSS", "SEO Basics"],
+        metrics: [["< 60 Sec", "Online Booking"], ["24 Hours", "Digital Lab Reports"], ["18+", "Senior Specialists"]],
+        quote: ["Patients love picking their exact consultation slot online without waiting on hold at reception.", "Dr. Meera Nair — Chief Medical Officer"],
+        items: [
+          { title: "General Physician", sub: "Dr. Meera Nair · MD Internal Med", price: "$25", numPrice: 25, tag: "Available Today", img: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=700&q=80" },
+          { title: "Dental Care", sub: "Dr. Arun Das · Cosmetic & Laser", price: "$40", numPrice: 40, tag: "Painless Care", img: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=700&q=80" },
+          { title: "Eye Check-up", sub: "Dr. Sara Khan · Retinal Imaging", price: "$30", numPrice: 30, tag: "Vision Lab", img: "https://images.unsplash.com/photo-1594824476967-48c8b964273f?auto=format&fit=crop&w=700&q=80" },
+          { title: "Full Lab Panel", sub: "65 biomarkers · Results in 24h", price: "$55", numPrice: 55, tag: "Preventive", img: "https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: 7,
+        name: "Flowly CRM",
+        category: "SaaS",
+        domain: "flowlycrm.app",
+        accent: "#7c3aed",
+        accentSoft: "#ede9fe",
+        mode: "dark",
+        tagline: "Customer management platform",
+        headline: "Close more deals with less busywork.",
+        subhead: "Automated multi-channel follow-ups, real-time drag-and-drop revenue pipelines, and 50+ native integrations.",
+        heroImg: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80",
+        badgeText: "FLOWLY AI 3.0 // LIVE PIPELINE",
+        ctaText: "Start 14-Day Free Trial",
+        actionLabel: "Activate Module",
+        addedLabel: "✓ Module Active",
+        drawerTitle: "Selected Workspace Plan",
+        sectionTitle: "High-Velocity Revenue Modules",
+        stack: ["React", "Tailwind CSS", "GSAP"],
+        metrics: [["3.4x", "Faster Deal Velocity"], ["50+", "Native Integrations"], ["99.99%", "Cloud Uptime SLA"]],
+        quote: ["Switching to Flowly automated 80% of our manual CRM entry and boosted Q3 close rates by 42%.", "David Chen — Head of Sales, ScaleOps"],
+        items: [
+          { title: "Auto Follow-ups", sub: "AI sequences · Never miss a lead", price: "$12/mo", numPrice: 12, tag: "Starter", img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=700&q=80" },
+          { title: "Live Pipeline", sub: "Visual drag-and-drop forecasting", price: "$29/mo", numPrice: 29, tag: "Growth", img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=700&q=80" },
+          { title: "50+ Integrations", sub: "Two-way sync with Gmail, Slack, Zoom", price: "$29/mo", numPrice: 29, tag: "Ecosystem", img: "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?auto=format&fit=crop&w=700&q=80" },
+          { title: "Team Permissions", sub: "Granular RBAC roles & SOC2 audit", price: "$59/mo", numPrice: 59, tag: "Enterprise", img: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: 8,
+        name: "PayWave",
+        category: "SaaS",
+        domain: "paywave.fi",
+        accent: "#10b981",
+        accentSoft: "#d1fae5",
+        mode: "dark",
+        tagline: "Fintech payments dashboard",
+        headline: "Payments that just work.",
+        subhead: "Accept cards in 135 currencies with instant FX settlement, automated smart invoicing, and AI fraud protection.",
+        heroImg: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=1200&q=80",
+        badgeText: "PCI-DSS LEVEL 1 · INSTANT PAYOUTS",
+        ctaText: "Create Merchant Account",
+        actionLabel: "Enable Feature",
+        addedLabel: "✓ Feature Enabled",
+        drawerTitle: "Configured Merchant Stack",
+        sectionTitle: "Global Payment Infrastructure",
+        stack: ["React", "API Integration", "Tailwind"],
+        metrics: [["135+", "Global Currencies"], ["0.2s", "Auth Latency"], ["99.7%", "Fraud Block Rate"]],
+        quote: ["PayWave cut our cross-border FX fees in half and gave our finance team real-time payout visibility.", "Tariq Al-Mansoor — CFO, Aura Commerce"],
+        items: [
+          { title: "Card Payments", sub: "2.4% per charge · Zero setup fee", price: "$0/mo", numPrice: 0, tag: "Core API", img: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=700&q=80" },
+          { title: "135 Currencies", sub: "Real-time mid-market FX settlement", price: "Included", numPrice: 0, tag: "Borderless", img: "https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?auto=format&fit=crop&w=700&q=80" },
+          { title: "Smart Invoices", sub: "One-click payment links & dunning", price: "Included", numPrice: 0, tag: "Billing", img: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=700&q=80" },
+          { title: "Fraud Shield", sub: "Machine-learning chargeback guard", price: "$9/mo", numPrice: 9, tag: "AI Security", img: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: 9,
+        name: "BrightPath Academy",
+        category: "Education",
+        domain: "brightpath.edu",
+        accent: "#1d4ed8",
+        accentSoft: "#dbeafe",
+        mode: "light",
+        tagline: "Online course platform",
+        headline: "Learn skills that get you hired.",
+        subhead: "Cohort-based engineering, UI/UX, and data bootcamps with 1:1 mentor code reviews and career placement.",
+        heroImg: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80",
+        badgeText: "94% GRADUATE HIRING RATE",
+        ctaText: "Browse Bootcamps",
+        actionLabel: "Enroll Now",
+        addedLabel: "✓ Added to Enrollment",
+        drawerTitle: "Your Course Enrollment",
+        sectionTitle: "Career-Accelerating Programs",
+        stack: ["React", "Tailwind CSS", "UI/UX"],
+        metrics: [["94%", "Placed Within 90 Days"], ["4.9★", "Student Rating"], ["1:1", "Senior Mentorship"]],
+        quote: ["The Web Dev Bootcamp portfolio projects landed me three frontend interviews before I even graduated.", "Nikhil Varma — Frontend Engineer"],
+        items: [
+          { title: "Web Dev Bootcamp", sub: "12 weeks · Full-Stack · 4.9★", price: "$199", numPrice: 199, tag: "Career Track", img: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=700&q=80" },
+          { title: "UI/UX Design", sub: "8 weeks · Figma Systems · 4.8★", price: "$149", numPrice: 149, tag: "Design", img: "https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=700&q=80" },
+          { title: "Data Analytics", sub: "10 weeks · SQL, Python & BI · 4.9★", price: "$179", numPrice: 179, tag: "High Demand", img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=700&q=80" },
+          { title: "Digital Marketing", sub: "6 weeks · Performance Ads · 4.7★", price: "$99", numPrice: 99, tag: "Growth", img: "https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?auto=format&fit=crop&w=700&q=80" }
+        ]
+      },
+      {
+        id: 10,
+        name: "Aria Studio",
+        category: "Creative",
+        domain: "ariastudio.design",
+        accent: "#9333ea",
+        accentSoft: "#f3e8ff",
+        mode: "editorial",
+        tagline: "Personal brand portfolio",
+        headline: "Design with a point of view.",
+        subhead: "Multidisciplinary direction across brand identity systems, interactive mobile prototypes, and 3D motion reels.",
+        heroImg: "https://images.unsplash.com/photo-1558655146-d09347e92766?auto=format&fit=crop&w=1200&q=80",
+        badgeText: "AWARD-WINNING CREATIVE DIRECTION",
+        ctaText: "Commission Studio",
+        actionLabel: "Commission Scope",
+        addedLabel: "✓ Scope Selected",
+        drawerTitle: "Selected Studio Deliverables",
+        sectionTitle: "Creative Direction & Deliverables",
+        stack: ["Figma to Code", "GSAP", "CSS3"],
+        metrics: [["42+", "Global Brand Launches"], ["100%", "Bespoke Craft"], ["4x", "Design Award Nominee"]],
+        quote: ["Aria Studio gave our startup an unmistakable visual identity that immediately resonated with Tier-1 VCs.", "Camille Laurent — Co-Founder, Lumina"],
+        items: [
+          { title: "Brand Identity", sub: "Logo suite + 60-page brand book", price: "$1,800", numPrice: 1800, tag: "Signature", img: "https://images.unsplash.com/photo-1634942537034-2531766767d1?auto=format&fit=crop&w=700&q=80" },
+          { title: "App Design", sub: "Design system UI kit + prototype", price: "$2,500", numPrice: 2500, tag: "Product UI", img: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=700&q=80" },
+          { title: "Poster Series", sub: "Exhibition-grade print typography", price: "$600", numPrice: 600, tag: "Editorial", img: "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=700&q=80" },
+          { title: "Motion Reel", sub: "30-second 60fps kinetic launch film", price: "$900", numPrice: 900, tag: "Kinetic 3D", img: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=700&q=80" }
+        ]
+      }
+    ];
+
+    const SKILLS = [
+      ["HTML5", "CORE MARKUP", "Semantic, accessible W3C architecture engineered for screen readers and search crawlers."],
+      ["CSS3", "VISUAL STYLING", "Custom properties, fluid CSS Grid/Flexbox layouts, glassmorphism, and hardware-accelerated keyframes."],
+      ["JavaScript", "INTERACTIVE ENGINE", "ES6+ state management, custom DOM choreography, intersection observers, and 60fps canvas visuals."],
+      ["React", "FRONTEND FRAMEWORK", "Component-driven architecture, reusable hooks, dynamic filtering, and ultra-fast SPA transitions."],
+      ["Tailwind CSS", "DESIGN SYSTEM", "Utility-first responsive design tokens, dark/light theming, and rapid mobile-first prototyping."],
+      ["Git & GitHub", "VERSION CONTROL", "Clean branching workflows, version tracking, and continuous deployment pipelines."],
+      ["UI/UX", "PRODUCT DESIGN", "Conversion-focused visual hierarchy, editorial typography, and intuitive user journeys."],
+      ["GSAP", "MOTION CHOREOGRAPHY", "Scroll-linked timelines, split-text kinetic reveals, magnetic buttons, and 3D perspective tilt."],
+      ["SEO basics", "DISCOVERABILITY", "Semantic heading structure, OpenGraph metadata, fast LCP/CLS scores, and clean URLs."],
+      ["API integration", "DYNAMIC DATA", "Connecting interfaces to REST endpoints, booking forms, and interactive commerce states."],
+      ["Figma to code", "PIXEL PRECISION", "Translating high-fidelity Figma designs into responsive, interactive production code."]
+    ];
+
+    const SERVICES = [
+      {
+        num: "01",
+        title: "Business websites",
+        desc: "Credible, fast sites that turn visitors into clients with clear positioning and high-impact storytelling.",
+        img: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=900&q=80",
+        pills: ["Lead Generation", "Brand Positioning", "Fast Loading", "CMS Ready"]
+      },
+      {
+        num: "02",
+        title: "E-commerce stores",
+        desc: "High-converting product pages, interactive variant selectors, slide-out carts, and seamless checkout flows.",
+        img: "https://images.unsplash.com/photo-1608248597359-0e6d526a6c58?auto=format&fit=crop&w=900&q=80",
+        pills: ["Product Catalogs", "Interactive Cart", "Mobile Checkout", "Conversion UI"]
+      },
+      {
+        num: "03",
+        title: "Responsive design",
+        desc: "Pixel-perfect fluid layouts that adapt effortlessly across iPhones, iPads, laptops, and 4K monitors.",
+        img: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=900&q=80",
+        pills: ["Mobile-First", "Touch Friendly", "Fluid Typography", "Cross-Browser QA"]
+      },
+      {
+        num: "04",
+        title: "Animation & UX",
+        desc: "Butter-smooth scrolling, kinetic typography, 3D card tilt, and magnetic micro-interactions that delight users.",
+        img: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=900&q=80",
+        pills: ["GSAP Motion", "60fps Transitions", "Micro-Interactions", "Interactive Storytelling"]
+      },
+      {
+        num: "05",
+        title: "SEO & speed",
+        desc: "Clean semantic markup, optimized assets, and Core Web Vitals tuning for 99+ Lighthouse performance.",
+        img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=900&q=80",
+        pills: ["99+ Lighthouse", "Semantic HTML5", "Fast First Paint", "Search Visibility"]
+      },
+      {
+        num: "06",
+        title: "Redesign & fixes",
+        desc: "Transform an outdated, slow website into a modern, high-performing digital flagship in days.",
+        img: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=900&q=80",
+        pills: ["UI Modernization", "Speed Overhaul", "Mobile Repair", "Code Cleanup"]
+      }
+    ];
+
+    /* ------------------------------------------------------------------------
+       4. CINEMATIC PRELOADER EXECUTION
+       ------------------------------------------------------------------------ */
+    $("#preloader-name").innerHTML = [..."MUHAMMED SABITH"].map((ch, i) =>
+      `<span class="char-reveal" style="--i:${i}">${ch === " " ? "&nbsp;" : ch}</span>`
+    ).join("");
+
+    document.body.classList.add("lock");
+    let preloaderFinished = false;
+
+    function completePreloader() {
+      if (preloaderFinished) return;
+      preloaderFinished = true;
+      $("#preloader-num").textContent = "100";
+      $("#preloader-bar").style.width = "100%";
+      $("#preloader").classList.add("done");
+      document.body.classList.remove("lock");
+      document.body.classList.add("ready");
+      setTimeout(() => {
+        const el = $("#preloader");
+        if (el) el.remove();
+      }, 1200);
+    }
+
+    {
+      let pct = 0;
+      const timer = setInterval(() => {
+        pct = Math.min(100, pct + 3 + Math.floor(Math.random() * 6));
+        const numEl = $("#preloader-num");
+        const barEl = $("#preloader-bar");
+        if (numEl) numEl.textContent = String(pct).padStart(3, "0");
+        if (barEl) barEl.style.width = pct + "%";
+        if (pct >= 100) {
+          clearInterval(timer);
+          setTimeout(completePreloader, 250);
+        }
+      }, 45);
+    }
+
+    $("#skip-preloader").onclick = completePreloader;
+
+    /* ------------------------------------------------------------------------
+       5. LIVE IST CLOCK (MALAPPURAM, KERALA) & HERO TYPEWRITER
+       ------------------------------------------------------------------------ */
+    function updateISTClock() {
+      try {
+        const timeStr = new Date().toLocaleTimeString("en-IN", {
+          timeZone: "Asia/Kolkata",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+          hour12: true
+        });
+        if ($("#hero-ist-clock")) $("#hero-ist-clock").textContent = `${timeStr} IST`;
+        if ($("#bento-ist-clock")) $("#bento-ist-clock").textContent = `${timeStr} IST`;
+      } catch (e) {}
+    }
+    updateISTClock();
+    setInterval(updateISTClock, 1000);
+
+    (() => {
+      const roles = [
+        "Business Websites",
+        "E-Commerce Flagships",
+        "Luxury Real Estate Portals",
+        "Specialty Cafe & Dining Sites",
+        "SaaS & Fintech Platforms",
+        "Healthcare Booking Systems",
+        "Online Education Academies"
+      ];
+      let idx = 0;
+      const el = $("#typewriter-role");
+      setInterval(() => {
+        idx = (idx + 1) % roles.length;
+        el.style.opacity = "0";
+        setTimeout(() => {
+          el.textContent = roles[idx];
+          el.style.opacity = "1";
+        }, 200);
+      }, 2600);
+    })();
+
+    /* ------------------------------------------------------------------------
+       6. MARQUEE, SKILLS MATRIX & INTERACTIVE SERVICES RENDERING
+       ------------------------------------------------------------------------ */
+    const marqueeWords = [
+      ...SKILLS.map(s => s[0]),
+      "MALAPPURAM · KERALA",
+      "11 LIVE CONCEPT WEBSITES",
+      ...SKILLS.map(s => s[0]),
+      "MALAPPURAM · KERALA"
+    ];
+    $("#marquee-track").innerHTML = [...marqueeWords, ...marqueeWords].map(w =>
+      `<span class="inline-flex items-center gap-10">${w}<i class="not-italic text-sm" style="color: var(--accent);">✦</i></span>`
+    ).join("");
+
+    // Render Interactive Skills Matrix
+    $("#skills-matrix").innerHTML = SKILLS.map(([name, tag, desc], i) => `
+      <button type="button" data-skill-idx="${i}"
+              class="skill-btn px-4 py-2 rounded-full font-mono text-xs font-semibold border transition-all ${i === 3 ? 'bg-[#d4ff33] text-black border-transparent scale-105' : 'border-current/15 bg-white/5 hover:border-[#d4ff33]'}">
+        ${name}
+      </button>
+    `).join("");
+
+    $$(".skill-btn").forEach(btn => {
+      const triggerSkill = () => {
+        const [name, tag, desc] = SKILLS[+btn.dataset.skillIdx];
+        $$(".skill-btn").forEach(b => {
+          const active = b === btn;
+          b.className = `skill-btn px-4 py-2 rounded-full font-mono text-xs font-semibold border transition-all ${active ? 'bg-[#d4ff33] text-black border-transparent scale-105' : 'border-current/15 bg-white/5 hover:border-[#d4ff33]'}`;
+        });
+        $("#skill-console-title").textContent = `MODULE // ${name.toUpperCase()}`;
+        $("#skill-console-level").textContent = tag;
+        $("#skill-console-desc").textContent = desc;
+        playSynth(640, 'sine', 0.05, 0.018);
+      };
+      btn.addEventListener("mouseenter", triggerSkill);
+      btn.addEventListener("click", triggerSkill);
+    });
+
+    // Render Interactive Services List + Preview Deck
+    function updateServicePreview(idx) {
+      const s = SERVICES[idx];
+      $("#service-preview-img").src = s.img;
+      $("#service-preview-tag").textContent = `${s.num} // CAPABILITY`;
+      $("#service-preview-title").textContent = s.title;
+      $("#service-preview-desc").textContent = s.desc;
+      $("#service-preview-pills").innerHTML = s.pills.map(p =>
+        `<span class="px-3 py-1 rounded-full font-mono text-xs border border-current/15 bg-white/5">${p}</span>`
+      ).join("");
+    }
+
+    $("#services-list").innerHTML = SERVICES.map((s, i) => `
+      <div class="service-row group py-6 px-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 cursor-pointer transition-all hover:pl-7 rounded-2xl hover:bg-white/5"
+           data-service-idx="${i}">
+        <div class="flex items-start sm:items-center gap-5">
+          <span class="font-mono text-xs opacity-50 group-hover:opacity-100" style="color: var(--accent);">${s.num}</span>
+          <div>
+            <h3 class="font-display font-bold text-2xl sm:text-3xl group-hover:text-[#d4ff33] transition">${s.title}</h3>
+            <p class="text-sm mt-1 max-w-md" style="color: var(--mut);">${s.desc}</p>
+          </div>
+        </div>
+        <span class="w-10 h-10 rounded-full border border-current/15 flex items-center justify-center font-mono text-sm group-hover:bg-[#d4ff33] group-hover:text-black group-hover:rotate-[-45deg] transition-all shrink-0">
+          →
+        </span>
+      </div>
+    `).join("");
+
+    updateServicePreview(0);
+    $$(".service-row").forEach(row => {
+      row.addEventListener("mouseenter", () => {
+        updateServicePreview(+row.dataset.serviceIdx);
+        playSynth(520, 'sine', 0.05, 0.015);
+      });
+      row.addEventListener("click", () => {
+        updateServicePreview(+row.dataset.serviceIdx);
+        location.href = "#contact";
+      });
+    });
+
+    /* ------------------------------------------------------------------------
+       7. 11 REALISTIC WEBSITE CARDS SHOWCASE & FILTERING
+       ------------------------------------------------------------------------ */
+    const categories = ["All", ...new Set(PROJECTS.map(p => p.category))];
+    let activeCategory = "All";
+    let searchKeyword = "";
+
+    function renderCategoryPills() {
+      $("#category-filters").innerHTML = categories.map(cat => {
+        const count = cat === "All" ? PROJECTS.length : PROJECTS.filter(p => p.category === cat).length;
+        const active = cat === activeCategory;
+        return `
+          <button type="button" data-cat="${cat}"
+                  class="px-5 py-2.5 rounded-full font-display font-bold text-xs sm:text-sm whitespace-nowrap transition-all flex items-center gap-2 border ${
+                    active
+                      ? 'bg-[#d4ff33] text-black border-[#d4ff33] shadow-lg'
+                      : 'border-current/15 bg-white/5 hover:border-current/40'
+                  }">
+            <span>${cat}</span>
+            <span class="font-mono text-[11px] opacity-70">${count}</span>
+          </button>
+        `;
+      }).join("");
+    }
+
+    function renderProjectGrid() {
+      const list = PROJECTS.filter(p => {
+        const matchCat = activeCategory === "All" || p.category === activeCategory;
+        const q = searchKeyword.trim().toLowerCase();
+        const matchQ = !q ||
+          p.name.toLowerCase().includes(q) ||
+          p.category.toLowerCase().includes(q) ||
+          p.tagline.toLowerCase().includes(q) ||
+          p.headline.toLowerCase().includes(q);
+        return matchCat && matchQ;
+      });
+
+      if (!list.length) {
+        $("#projects-grid").innerHTML = `
+          <div class="col-span-full p-12 rounded-3xl border border-current/15 bg-white/5 text-center space-y-4">
+            <div class="font-display font-bold text-2xl">No matching websites found</div>
+            <p class="text-sm opacity-75">Try clearing your search filter or viewing all 11 concept websites.</p>
+            <button type="button" id="reset-search-btn" class="px-5 py-2.5 rounded-full bg-[#d4ff33] text-black font-bold text-xs">
+              Reset Filter
+            </button>
+          </div>
+        `;
+        const rb = $("#reset-search-btn");
+        if (rb) rb.onclick = () => {
+          activeCategory = "All";
+          searchKeyword = "";
+          $("#project-search").value = "";
+          renderCategoryPills();
+          renderProjectGrid();
+        };
+        return;
+      }
+
+      $("#projects-grid").innerHTML = list.map((p, idx) => `
+        <article class="project-card group" data-launch-demo="${p.id}" data-cursor="LIVE SITE ↗">
+          <div>
+            <!-- Browser Window Chrome Header -->
+            <div class="px-4 py-2.5 bg-[#0b0e15] border-b border-white/10 flex items-center justify-between text-[11px] font-mono text-zinc-400">
+              <div class="flex items-center gap-1.5">
+                <span class="w-2.5 h-2.5 rounded-full bg-rose-500/80"></span>
+                <span class="w-2.5 h-2.5 rounded-full bg-amber-400/80"></span>
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500/80"></span>
+              </div>
+              <span class="text-zinc-300 truncate max-w-[150px]">🔒 ${p.domain}</span>
+              <span class="px-2 py-0.5 rounded text-[10px] font-semibold" style="background:${p.accent}33; color:#fff;">
+                ${p.category}
+              </span>
+            </div>
+
+            <!-- Realistic Website Hero Preview Viewport -->
+            <div class="relative aspect-[16/10] overflow-hidden bg-zinc-950">
+              <img src="${p.heroImg}"
+                   onerror="this.src='https://placehold.co/800x500/111827/ffffff?text=${encodeURIComponent(p.name)}'"
+                   alt="${p.name}" loading="lazy"
+                   class="thumb-img w-full h-full object-cover opacity-85" />
+
+              <!-- Miniature Website UI Overlay inside Card -->
+              <div class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/45 to-black/20 p-4 flex flex-col justify-between">
+                <!-- Mini Site Navbar -->
+                <div class="flex items-center justify-between text-[10px] text-white/90 font-mono">
+                  <span class="font-display font-bold text-xs tracking-tight px-2 py-0.5 rounded bg-black/50 backdrop-blur-md">
+                    ${p.name}
+                  </span>
+                  <span class="px-2.5 py-0.5 rounded-full bg-white/15 backdrop-blur-md border border-white/15">
+                    ${p.badgeText}
+                  </span>
+                </div>
+
+                <!-- Mini Site Hero Copy & Floating Item Pill -->
+                <div class="space-y-2">
+                  <h4 class="text-white font-display font-bold text-lg leading-snug drop-shadow">
+                    ${p.headline}
+                  </h4>
+                  <div class="flex items-center justify-between gap-2 pt-1">
+                    <span class="px-2.5 py-1 rounded-lg bg-white text-black font-bold text-[11px]">
+                      ${p.ctaText}
+                    </span>
+                    <span class="px-2.5 py-1 rounded-lg bg-black/65 backdrop-blur-md text-zinc-200 font-mono text-[10px] border border-white/15">
+                      ${p.items[0].title} · ${p.items[0].price}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card Body Details -->
+            <div class="p-5">
+              <div class="flex items-center justify-between gap-2 mb-1.5">
+                <h3 class="font-display font-bold text-xl group-hover:text-[#d4ff33] transition">${p.name}</h3>
+                <span class="font-mono text-xs opacity-50">#${String(p.id + 1).padStart(2, "0")}</span>
+              </div>
+              <p class="text-sm line-clamp-2" style="color: var(--mut);">${p.subhead}</p>
+            </div>
+          </div>
+
+          <!-- Card Footer Tech Stack & Launch CTA -->
+          <div class="px-5 py-3.5 border-t border-current/10 flex items-center justify-between gap-2">
+            <div class="flex items-center gap-1.5 flex-wrap">
+              ${p.stack.map(st => `<span class="text-[10px] font-mono px-2 py-0.5 rounded bg-white/5 border border-current/10 opacity-75">${st}</span>`).join("")}
+            </div>
+            <span class="font-mono text-xs font-bold flex items-center gap-1 group-hover:translate-x-1 transition" style="color: var(--accent);">
+              <span>Live Site</span>
+              <span>↗</span>
+            </span>
+          </div>
+        </article>
+      `).join("");
+    }
+
+    renderCategoryPills();
+    renderProjectGrid();
+
+    $("#category-filters").onclick = e => {
+      const btn = e.target.closest("[data-cat]");
+      if (!btn) return;
+      activeCategory = btn.dataset.cat;
+      renderCategoryPills();
+      renderProjectGrid();
+      playSynth(520, 'triangle', 0.08, 0.025);
+    };
+
+    $("#project-search").addEventListener("input", e => {
+      searchKeyword = e.target.value;
+      renderProjectGrid();
+    });
+
+    /* ------------------------------------------------------------------------
+       8. FULL-SCREEN REALISTIC MULTI-SECTION WEBSITE SIMULATOR ENGINE
+       ------------------------------------------------------------------------ */
+    let activeProjectIdx = 0;
+    let simCart = [];
+    let billingAnnual = true;
+    let selectedOptionPill = 0;
+
+    // Industry-specific interactive selector pills (Sizes / Skin Types / Time Slots / Guests)
+    function getIndustryOptions(cat) {
+      switch (cat) {
+        case "E-Commerce":
+          return ["Select Option:", "Standard / US 9", "Deluxe / US 10", "Limited / US 11"];
+        case "Real Estate":
+          return ["Viewing Slot:", "Private Morning Tour", "Sunset Helicopter Tour", "Live Video Walkthrough"];
+        case "Food & Cafe":
+          return ["Dining Preference:", "Dine-In Table (2 Guests)", "Express Pickup (15m)", "Priority Delivery"];
+        case "Healthcare":
+          return ["Appointment Slot:", "Today · 10:30 AM", "Today · 04:00 PM", "Tomorrow · 09:30 AM"];
+        case "SaaS":
+        case "Business":
+          return ["Deployment Tier:", "Cloud Team Workspace", "Enterprise Dedicated", "Custom API Sandbox"];
+        default:
+          return ["Cohort / Scope:", "Q1 Priority Slot", "Self-Paced + 1:1 Mentor", "Full Studio Retainer"];
+      }
+    }
+
+    function renderSimulatedWebsite(idx) {
+      const p = PROJECTS[idx];
+      const isDark = p.mode === "dark";
+      const isEditorial = p.mode === "editorial";
+      const bgMain = isDark ? "#080b12" : isEditorial ? "#faf7f2" : "#ffffff";
+      const bgAlt = isDark ? "#101624" : isEditorial ? "#f3ede2" : "#f8fafc";
+      const textMain = isDark ? "#f8fafc" : "#0f172a";
+      const textMuted = isDark ? "#94a3b8" : "#475569";
+      const borderCol = isDark ? "rgba(255,255,255,0.1)" : "rgba(15,23,42,0.1)";
+      const headFont = isEditorial ? "font-serif italic" : "font-display font-extrabold";
+      const opts = getIndustryOptions(p.category);
+
+      return `
+        <div class="relative min-h-screen select-none" style="background:${bgMain}; color:${textMain};">
+
+          <!-- Animated Brand Splash Screen -->
+          <div class="sim-splash" style="background: linear-gradient(135deg, #090d16, ${p.accent});">
+            <div class="px-3 py-1 rounded-full bg-white/15 font-mono text-[11px] uppercase tracking-widest mb-3">
+              ${p.domain}
+            </div>
+            <h3 class="${headFont} text-3xl sm:text-5xl tracking-tight text-center px-4">${p.name}</h3>
+            <div class="w-32 h-1 bg-white/25 rounded-full overflow-hidden mt-5">
+              <div class="h-full bg-white w-full origin-left animate-pulse"></div>
+            </div>
+          </div>
+
+          <!-- Slide-Over Interactive Cart / Booking Drawer inside Simulated Site -->
+          <aside id="sim-drawer" style="background:${isDark ? '#0f1523' : '#ffffff'}; color:${textMain}; border-left: 1px solid ${borderCol};" class="flex flex-col justify-between p-6">
+            <div>
+              <div class="flex items-center justify-between pb-4 border-b" style="border-color:${borderCol}">
+                <div>
+                  <span class="font-mono text-[10px] uppercase tracking-widest opacity-60">${p.name}</span>
+                  <h4 class="font-display font-bold text-lg">${p.drawerTitle}</h4>
+                </div>
+                <button type="button" id="close-sim-drawer" class="w-8 h-8 rounded-full border flex items-center justify-center text-xs hover:opacity-75" style="border-color:${borderCol}">✕</button>
+              </div>
+              <div id="sim-drawer-items" class="py-5 space-y-3 max-h-[340px] overflow-y-auto"></div>
+            </div>
+            <div class="pt-4 border-t space-y-3" style="border-color:${borderCol}">
+              <div class="flex items-center justify-between text-sm font-bold">
+                <span>Estimated Total</span>
+                <span id="sim-drawer-total" style="color:${p.accent}">$0.00</span>
+              </div>
+              <button type="button" id="sim-checkout-btn"
+                      class="w-full py-3.5 rounded-xl font-display font-bold text-xs uppercase tracking-wider text-white transition hover:brightness-110"
+                      style="background:${p.accent}">
+                Confirm & Complete Action →
+              </button>
+            </div>
+          </aside>
+
+          <!-- 1. Simulated Website Top Announcement Bar -->
+          <div class="px-4 py-2 text-center font-mono text-[11px] text-white" style="background:${p.accent}">
+            <span>${p.badgeText} · Interactive Live Concept Engineered by Muhammed Sabith</span>
+          </div>
+
+          <!-- 2. Simulated Website Sticky Navbar -->
+          <nav class="sticky top-0 z-40 px-6 sm:px-10 py-4 flex items-center justify-between backdrop-blur-md border-b"
+               style="background:${isDark ? 'rgba(8,11,18,0.88)' : 'rgba(255,255,255,0.88)'}; border-color:${borderCol}">
+            <div class="flex items-center gap-3">
+              <span class="w-8 h-8 rounded-lg flex items-center justify-center font-display font-extrabold text-xs text-white"
+                    style="background:${p.accent}">
+                ${p.name.slice(0, 2).toUpperCase()}
+              </span>
+              <span class="${headFont} text-xl sm:text-2xl tracking-tight">${p.name}</span>
+            </div>
+
+            <div class="hidden md:flex items-center gap-7 text-xs font-semibold opacity-80">
+              <button type="button" data-sim-scroll="#sim-hero-sec" class="hover:opacity-100">Overview</button>
+              <button type="button" data-sim-scroll="#sim-catalog-sec" class="hover:opacity-100">${p.sectionTitle}</button>
+              <button type="button" data-sim-scroll="#sim-proof-sec" class="hover:opacity-100">Client Impact</button>
+              <button type="button" data-sim-scroll="#sim-footer-sec" class="hover:opacity-100">Contact</button>
+            </div>
+
+            <button type="button" id="open-sim-drawer"
+                    class="px-4 py-2 rounded-full text-xs font-bold flex items-center gap-2 text-white shadow-md transition hover:scale-105"
+                    style="background:${p.accent}">
+              <span>${p.category === 'E-Commerce' || p.category === 'Food & Cafe' ? 'Bag' : 'Selected'}</span>
+              <span id="sim-cart-count" class="px-2 py-0.5 rounded-full bg-black/25 font-mono text-[11px]">0</span>
+            </button>
+          </nav>
+
+          <!-- 3. Simulated Website Split Hero Section with Real Unsplash Photography -->
+          <section id="sim-hero-sec" class="px-6 sm:px-10 py-12 sm:py-16 max-w-6xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+              <div class="lg:col-span-6 space-y-5">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-semibold"
+                     style="background:${p.accent}1a; color:${p.accent}">
+                  <span>● ${p.category.toUpperCase()} FLAGSHIP EXPERIENCE</span>
+                </div>
+                <h1 class="${headFont} text-4xl sm:text-6xl leading-[1.03] tracking-tight">
+                  ${p.headline}
+                </h1>
+                <p class="text-base sm:text-lg leading-relaxed" style="color:${textMuted}">
+                  ${p.subhead}
+                </p>
+                <div class="flex flex-wrap items-center gap-3 pt-2">
+                  <button type="button" data-sim-scroll="#sim-catalog-sec"
+                          class="px-6 py-3.5 rounded-full font-display font-bold text-xs sm:text-sm text-white shadow-lg transition hover:brightness-110"
+                          style="background:${p.accent}">
+                    ${p.ctaText} →
+                  </button>
+                  <button type="button" id="hero-quick-add"
+                          class="px-6 py-3.5 rounded-full font-display font-bold text-xs sm:text-sm border transition hover:opacity-80"
+                          style="border-color:${borderCol}">
+                    Quick Test: ${p.items[0].title} (${p.items[0].price})
+                  </button>
+                </div>
+              </div>
+
+              <!-- Right Hero Visual + Floating Glass Telemetry Card -->
+              <div class="lg:col-span-6 relative">
+                <div class="rounded-3xl overflow-hidden shadow-2xl border aspect-[4/3] relative" style="border-color:${borderCol}">
+                  <img src="${p.heroImg}"
+                       onerror="this.src='https://placehold.co/900x650/1e293b/ffffff?text=${encodeURIComponent(p.name)}'"
+                       alt="${p.name}" class="w-full h-full object-cover" />
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+                  <!-- Floating Live Metric Pill -->
+                  <div class="absolute bottom-4 left-4 right-4 p-4 rounded-2xl bg-black/75 backdrop-blur-md border border-white/15 text-white flex items-center justify-between gap-4">
+                    <div>
+                      <span class="font-mono text-[10px] uppercase tracking-widest opacity-70">Featured Highlight</span>
+                      <div class="font-display font-bold text-sm sm:text-base">${p.items[0].title} — ${p.items[0].sub}</div>
+                    </div>
+                    <span class="px-3 py-1.5 rounded-xl font-mono font-bold text-xs shrink-0 text-white" style="background:${p.accent}">
+                      ${p.items[0].price}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- 4. Live Key Metrics Strip -->
+          <section class="px-6 sm:px-10 py-8 border-y" style="background:${bgAlt}; border-color:${borderCol}">
+            <div class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
+              ${p.metrics.map(([val, label]) => `
+                <div>
+                  <div class="${headFont} text-3xl sm:text-4xl" style="color:${p.accent}">${val}</div>
+                  <div class="font-mono text-xs uppercase tracking-wider mt-1" style="color:${textMuted}">${label}</div>
+                </div>
+              `).join("")}
+            </div>
+          </section>
+
+          <!-- 5. Interactive Industry Widget + 4 Real Photo Product/Service Cards -->
+          <section id="sim-catalog-sec" class="px-6 sm:px-10 py-14 sm:py-16 max-w-6xl mx-auto">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+              <div>
+                <span class="font-mono text-xs uppercase tracking-widest" style="color:${p.accent}">Interactive Selection</span>
+                <h2 class="${headFont} text-3xl sm:text-4xl mt-1">${p.sectionTitle}</h2>
+              </div>
+
+              <!-- Interactive Option / Tier Selector Bar -->
+              <div class="flex flex-wrap items-center gap-1.5 p-1.5 rounded-2xl border" style="background:${bgAlt}; border-color:${borderCol}">
+                <span class="font-mono text-[11px] px-2.5 opacity-70">${opts[0]}</span>
+                ${opts.slice(1).map((optName, oIdx) => `
+                  <button type="button" data-opt-idx="${oIdx}"
+                          class="sim-opt-pill px-3 py-1.5 rounded-xl font-mono text-xs font-semibold transition ${
+                            oIdx === selectedOptionPill ? 'text-white shadow' : 'opacity-70 hover:opacity-100'
+                          }"
+                          style="${oIdx === selectedOptionPill ? `background:${p.accent}` : ''}">
+                    ${optName}
+                  </button>
+                `).join("")}
+              </div>
+            </div>
+
+            <!-- 4 Realistic Cards with Unsplash Photos & Interactive Add/Book State -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              ${p.items.map((item, k) => {
+                const inBag = simCart.some(c => c.title === item.title);
+                return `
+                  <div class="rounded-2xl border overflow-hidden flex flex-col justify-between transition-all hover:-translate-y-1.5 hover:shadow-xl"
+                       style="background:${isDark ? '#111827' : '#ffffff'}; border-color:${borderCol}">
+                    <div>
+                      <div class="relative h-44 overflow-hidden bg-zinc-900">
+                        <img src="${item.img}"
+                             onerror="this.src='https://placehold.co/600x400/1e293b/ffffff?text=${encodeURIComponent(item.title)}'"
+                             alt="${item.title}" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" />
+                        <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-black/70 backdrop-blur-md text-white font-mono text-[10px]">
+                          ${item.tag}
+                        </span>
+                      </div>
+                      <div class="p-4">
+                        <h3 class="font-display font-bold text-lg leading-snug">${item.title}</h3>
+                        <p class="text-xs mt-1" style="color:${textMuted}">${item.sub}</p>
+                      </div>
+                    </div>
+
+                    <div class="p-4 pt-2 flex items-center justify-between gap-2 border-t" style="border-color:${borderCol}">
+                      <span class="font-display font-extrabold text-base" style="color:${p.accent}">${item.price}</span>
+                      <button type="button" data-item-idx="${k}"
+                              class="sim-add-btn px-3.5 py-2 rounded-xl font-mono text-xs font-bold text-white transition hover:scale-105"
+                              style="background:${inBag ? '#10b981' : p.accent}">
+                        ${inBag ? p.addedLabel : p.actionLabel}
+                      </button>
+                    </div>
+                  </div>
+                `;
+              }).join("")}
+            </div>
+          </section>
+
+          <!-- 6. Verified Customer Proof Section -->
+          <section id="sim-proof-sec" class="px-6 sm:px-10 py-12 max-w-6xl mx-auto">
+            <div class="p-8 sm:p-12 rounded-3xl border text-center space-y-4" style="background:${bgAlt}; border-color:${borderCol}">
+              <div class="text-amber-400 text-sm tracking-widest">★★★★★</div>
+              <p class="${headFont} text-2xl sm:text-3xl max-w-3xl mx-auto leading-relaxed">
+                “${p.quote[0]}”
+              </p>
+              <div class="font-mono text-xs uppercase tracking-widest" style="color:${textMuted}">
+                — ${p.quote[1]}
+              </div>
+            </div>
+          </section>
+
+          <!-- 7. Simulated Website Conversion Footer -->
+          <footer id="sim-footer-sec" class="px-6 sm:px-10 py-12 border-t text-center space-y-4" style="border-color:${borderCol}">
+            <div class="${headFont} text-2xl">${p.name}</div>
+            <p class="text-xs max-w-md mx-auto" style="color:${textMuted}">
+              Interactive concept website designed & coded by <strong>Muhammed Sabith</strong> (Malappuram, Kerala).
+            </p>
+            <div class="pt-2">
+              <button type="button" class="sim-hire-trigger px-6 py-3 rounded-full font-display font-bold text-xs text-white shadow-lg"
+                      style="background:${p.accent}">
+                Want a custom website like ${p.name}? Hire Muhammed Sabith →
+              </button>
+            </div>
+          </footer>
+
+        </div>
+      `;
+    }
+
+    function updateSimDrawerUI() {
+      const p = PROJECTS[activeProjectIdx];
+      const countEl = $("#sim-cart-count");
+      const listEl = $("#sim-drawer-items");
+      const totalEl = $("#sim-drawer-total");
+      if (!countEl || !listEl || !totalEl) return;
+
+      countEl.textContent = simCart.length;
+
+      if (!simCart.length) {
+        listEl.innerHTML = `
+          <div class="py-10 text-center text-xs opacity-60 font-mono">
+            No items selected yet. Click any "${p.actionLabel}" button on the page to test the live state!
+          </div>
+        `;
+        totalEl.textContent = "$0.00";
+        return;
+      }
+
+      let sum = 0;
+      listEl.innerHTML = simCart.map((it, idx) => {
+        sum += it.numPrice || 0;
+        return `
+          <div class="p-3 rounded-xl border border-current/10 flex items-center justify-between gap-3">
+            <div class="flex items-center gap-3 min-w-0">
+              <img src="${it.img}" alt="${it.title}" class="w-11 h-11 rounded-lg object-cover shrink-0" />
+              <div class="truncate">
+                <div class="font-bold text-xs truncate">${it.title}</div>
+                <div class="font-mono text-[10px] opacity-65">${it.opt} · ${it.price}</div>
+              </div>
+            </div>
+            <button type="button" data-rm-idx="${idx}" class="text-xs opacity-50 hover:opacity-100 px-2">✕</button>
+          </div>
+        `;
+      }).join("");
+
+      totalEl.textContent = sum > 0 ? `$${sum.toLocaleString()}` : "Included";
+    }
+
+    function openSimulator(projectIdx) {
+      activeProjectIdx = (projectIdx + PROJECTS.length) % PROJECTS.length;
+      simCart = [];
+      selectedOptionPill = 0;
+      const p = PROJECTS[activeProjectIdx];
+
+      $("#sim-counter").textContent = `${activeProjectIdx + 1} / ${PROJECTS.length}`;
+      $("#sim-url").textContent = `https://${p.domain}`;
+      $("#sim-badge").textContent = p.category;
+      $("#sim-frame").innerHTML = renderSimulatedWebsite(activeProjectIdx);
+      updateSimDrawerUI();
+
+      $("#sim-modal").classList.add("open");
+      document.body.classList.add("lock");
+      $("#sim-canvas-wrap").scrollTop = 0;
+      playSynth(640, 'sine', 0.12, 0.03);
+    }
+
+    function closeSimulator() {
+      $("#sim-modal").classList.remove("open");
+      document.body.classList.remove("lock");
+      playSynth(360, 'sine', 0.08, 0.02);
+    }
+
+    // Delegate clicks on any [data-launch-demo] element (Hero 3D deck + 11 Grid Cards)
+    document.addEventListener("click", e => {
+      const launchEl = e.target.closest("[data-launch-demo]");
+      if (launchEl) {
+        openSimulator(+launchEl.dataset.launchDemo);
+      }
+    });
+
+    $("#sim-prev").onclick = () => openSimulator(activeProjectIdx - 1);
+    $("#sim-next").onclick = () => openSimulator(activeProjectIdx + 1);
+    $("#sim-close").onclick = closeSimulator;
+    $("#sim-close-dot").onclick = closeSimulator;
+    $("#sim-modal").onclick = e => { if (e.target.id === "sim-modal") closeSimulator(); };
+
+    $("#sim-hire-btn").onclick = () => {
+      const p = PROJECTS[activeProjectIdx];
+      closeSimulator();
+      $("#f-msg").value = `Hi Sabith, I explored your "${p.name}" (${p.category}) live demo and would love a website like this for my business.`;
+      location.href = "#contact";
+    };
+
+    // Viewport Switcher inside Simulator (Desktop / Tablet / Mobile)
+    $$(".vp-btn").forEach(btn => {
+      btn.onclick = () => {
+        const vp = btn.dataset.vp;
+        $$(".vp-btn").forEach(b => {
+          const on = b === btn;
+          b.className = `vp-btn px-2.5 py-1 rounded-lg transition ${on ? 'bg-[#d4ff33] text-black font-bold' : 'text-zinc-400 hover:text-white'}`;
+        });
+        const frame = $("#sim-frame");
+        const wrap = $("#sim-canvas-wrap");
+        frame.classList.toggle("tablet-vp", vp === "tablet");
+        frame.classList.toggle("mobile-vp", vp === "mobile");
+        wrap.classList.toggle("framed", vp !== "desktop");
+        playSynth(560, 'triangle', 0.07, 0.025);
+      };
+    });
+
+    // Event delegation inside Simulated Website Frame
+    $("#sim-frame").addEventListener("click", e => {
+      const p = PROJECTS[activeProjectIdx];
+      const opts = getIndustryOptions(p.category).slice(1);
+
+      // Smooth scroll inside simulated website
+      const scrollBtn = e.target.closest("[data-sim-scroll]");
+      if (scrollBtn) {
+        const target = $("#sim-frame").querySelector(scrollBtn.dataset.simScroll);
+        if (target) target.scrollIntoView({ behavior: "smooth" });
+        return;
+      }
+
+      // Option / Tier pill selector
+      const optBtn = e.target.closest(".sim-opt-pill");
+      if (optBtn) {
+        selectedOptionPill = +optBtn.dataset.optIdx;
+        $$("#sim-frame .sim-opt-pill").forEach((pill, i) => {
+          const active = i === selectedOptionPill;
+          pill.style.background = active ? p.accent : "transparent";
+          pill.classList.toggle("text-white", active);
+          pill.classList.toggle("shadow", active);
+          pill.classList.toggle("opacity-70", !active);
+        });
+        playSynth(580, 'sine', 0.06, 0.02);
+        return;
+      }
+
+      // Open / Close Slide-Over Drawer
+      if (e.target.closest("#open-sim-drawer")) {
+        $("#sim-drawer").classList.add("open");
+        return;
+      }
+      if (e.target.closest("#close-sim-drawer")) {
+        $("#sim-drawer").classList.remove("open");
+        return;
+      }
+
+      // Quick Test Hero button
+      if (e.target.closest("#hero-quick-add")) {
+        const firstItem = p.items[0];
+        simCart.push({ ...firstItem, opt: opts[selectedOptionPill] });
+        updateSimDrawerUI();
+        $("#sim-drawer").classList.add("open");
+        playSynth(720, 'triangle', 0.1, 0.03);
+        return;
+      }
+
+      // Add/Toggle Item Card Button
+      const addBtn = e.target.closest(".sim-add-btn");
+      if (addBtn) {
+        const item = p.items[+addBtn.dataset.itemIdx];
+        const existingIdx = simCart.findIndex(c => c.title === item.title);
+        if (existingIdx > -1) {
+          simCart.splice(existingIdx, 1);
+          addBtn.textContent = p.actionLabel;
+          addBtn.style.background = p.accent;
+          playSynth(420, 'sine', 0.08, 0.02);
+        } else {
+          simCart.push({ ...item, opt: opts[selectedOptionPill] });
+          addBtn.textContent = p.addedLabel;
+          addBtn.style.background = "#10b981";
+          playSynth(760, 'sine', 0.1, 0.03);
+        }
+        updateSimDrawerUI();
+        return;
+      }
+
+      // Remove item from Drawer
+      const rmBtn = e.target.closest("[data-rm-idx]");
+      if (rmBtn) {
+        simCart.splice(+rmBtn.dataset.rmIdx, 1);
+        updateSimDrawerUI();
+        return;
+      }
+
+      // Complete Demo Checkout / Booking inside Drawer
+      if (e.target.closest("#sim-checkout-btn")) {
+        showToast(`✓ Demo confirmation complete on ${p.name}!`);
+        $("#sim-drawer").classList.remove("open");
+        playSynth(840, 'triangle', 0.14, 0.035);
+        return;
+      }
+
+      // Hire Sabith Trigger inside Simulated Footer
+      if (e.target.closest(".sim-hire-trigger")) {
+        $("#sim-hire-btn").click();
+      }
+    });
+
+    addEventListener("keydown", e => {
+      if (!$("#sim-modal").classList.contains("open")) return;
+      if (e.key === "Escape") closeSimulator();
+      if (e.key === "ArrowRight") openSimulator(activeProjectIdx + 1);
+      if (e.key === "ArrowLeft") openSimulator(activeProjectIdx - 1);
+    });
+
+    /* ------------------------------------------------------------------------
+       9. SCROLL REVEAL, MARQUEE PHYSICS & CUSTOM MAGNETIC CURSOR
+       ------------------------------------------------------------------------ */
+    const revealIO = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          revealIO.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    $$(".reveal").forEach(el => revealIO.observe(el));
+
+    // Velocity-reactive Marquee Loop
+    let mqX = 0;
+    let prevScrollY = window.scrollY;
+    let scrollVelocity = 0;
+
+    function animateMarquee() {
+      const track = $("#marquee-track");
+      if (track) {
+        scrollVelocity *= 0.92;
+        mqX -= (0.8 + Math.min(scrollVelocity, 5.5));
+        const halfWidth = track.scrollWidth / 2;
+        if (Math.abs(mqX) >= halfWidth) mqX = 0;
+        track.style.transform = `translate3d(${mqX}px, 0, 0)`;
+      }
+      requestAnimationFrame(animateMarquee);
+    }
+    requestAnimationFrame(animateMarquee);
+
+    addEventListener("scroll", () => {
+      const delta = Math.abs(window.scrollY - prevScrollY);
+      scrollVelocity = Math.min(delta * 0.14, 6);
+      prevScrollY = window.scrollY;
+
+      const total = document.documentElement.scrollHeight - window.innerHeight;
+      $("#scroll-bar").style.width = (total > 0 ? (window.scrollY / total) * 100 : 0) + "%";
+    }, { passive: true });
+
+    // Custom Dual Magnetic Cursor + Card Spotlight & 3D Tilt
+    (() => {
+      if (!matchMedia("(hover: hover)").matches) return;
+      const dot = $("#cursor-dot");
+      const ring = $("#cursor-ring");
+      let mx = window.innerWidth / 2, my = window.innerHeight / 2;
+      let rx = mx, ry = my;
+
+      addEventListener("pointermove", e => {
+        mx = e.clientX;
+        my = e.clientY;
+        dot.style.opacity = "1";
+        ring.style.opacity = "1";
+        dot.style.transform = `translate3d(${mx}px, ${my}px, 0)`;
+
+        const hoverTarget = e.target.closest("[data-cursor]");
+        if (hoverTarget) {
+          ring.classList.add("expand");
+          ring.textContent = hoverTarget.dataset.cursor;
+        } else {
+          ring.classList.remove("expand");
+          ring.textContent = "";
+        }
+      }, { passive: true });
+
+      function tickCursor() {
+        rx += (mx - rx) * 0.18;
+        ry += (my - ry) * 0.18;
+        ring.style.transform = `translate3d(${rx}px, ${ry}px, 0)`;
+        requestAnimationFrame(tickCursor);
+      }
+      requestAnimationFrame(tickCursor);
+    })();
+
+    // Spotlight & 3D Tilt on Bento Cards
+    document.addEventListener("pointermove", e => {
+      if (e.pointerType !== "mouse") return;
+      const card = e.target.closest(".spotlight-card");
+      if (!card) return;
+      const r = card.getBoundingClientRect();
+      const x = e.clientX - r.left;
+      const y = e.clientY - r.top;
+      card.style.setProperty("--mx", `${x}px`);
+      card.style.setProperty("--my", `${y}px`);
+
+      if (card.hasAttribute("data-tilt")) {
+        const rx = ((y / r.height) - 0.5) * -6;
+        const ry = ((x / r.width) - 0.5) * 6;
+        card.style.transform = `perspective(1000px) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg) translateY(-4px)`;
+      }
+    });
+
+    document.addEventListener("pointerout", e => {
+      const card = e.target.closest(".spotlight-card");
+      if (card && !card.contains(e.relatedTarget)) {
+        card.style.transform = "";
+      }
+    });
+
+    // Magnetic Pull on Primary Buttons
+    $$(".magnetic").forEach(btn => {
+      btn.addEventListener("pointermove", e => {
+        const r = btn.getBoundingClientRect();
+        const dx = (e.clientX - r.left - r.width / 2) * 0.22;
+        const dy = (e.clientY - r.top - r.height / 2) * 0.28;
+        btn.style.transform = `translate3d(${dx}px, ${dy}px, 0)`;
+      });
+      btn.addEventListener("pointerleave", () => {
+        btn.style.transform = "";
+      });
+    });
+
+    /* ------------------------------------------------------------------------
+       10. CONTACT FORM: INR / USD SWITCHER, COPY EMAIL & MAILTO DISPATCH
+       ------------------------------------------------------------------------ */
+    const BUDGET_RANGES = {
+      inr: ["Not sure yet", "Under ₹15,000", "₹15,000 – ₹35,000", "₹35,000 – ₹80,000", "₹80,000+"],
+      usd: ["Not sure yet", "Under $500", "$500 – $1,500", "$1,500 – $5,000", "$5,000+"]
+    };
+
+    function setCurrency(mode) {
+      $("#f-budget").innerHTML = BUDGET_RANGES[mode].map(b => `<option>${b}</option>`).join("");
+      $$(".cur-toggle").forEach(btn => {
+        const active = btn.dataset.cur === mode;
+        btn.style.background = active ? "var(--accent)" : "transparent";
+        btn.style.color = active ? "var(--accent-ink)" : "inherit";
+        btn.classList.toggle("opacity-70", !active);
+      });
+    }
+    setCurrency("inr");
+
+    $$(".cur-toggle").forEach(btn => {
+      btn.onclick = () => {
+        setCurrency(btn.dataset.cur);
+        playSynth(540, 'sine', 0.06, 0.02);
+      };
+    });
+
+    function showToast(msg) {
+      const t = $("#toast");
+      $("#toast-msg").textContent = msg;
+      t.classList.remove("translate-y-12", "opacity-0");
+      setTimeout(() => t.classList.add("translate-y-12", "opacity-0"), 2800);
+    }
+
+    $("#copy-email").onclick = () => {
+      const ta = document.createElement("textarea");
+      ta.value = EMAIL;
+      ta.style.position = "fixed";
+      ta.style.left = "-9999px";
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand("copy"); } catch (e) {}
+      document.body.removeChild(ta);
+      $("#copy-email").textContent = "Copied!";
+      playSynth(760, 'triangle', 0.1, 0.03);
+      showToast("Copied saabi1th@outlook.com to clipboard");
+      setTimeout(() => { $("#copy-email").textContent = "Copy"; }, 2200);
+    };
+
+    $("#contact-form").onsubmit = e => {
+      e.preventDefault();
+      const body = `Name: ${$("#f-name").value}\nEmail: ${$("#f-email").value}\nProject Type: ${$("#f-type").value}\nBudget: ${$("#f-budget").value}\n\n${$("#f-msg").value}`;
+      $("#form-status").classList.remove("hidden");
+      playSynth(680, 'sine', 0.15, 0.035);
+      showToast("Opening email client for saabi1th@outlook.com...");
+      location.href = `mailto:${EMAIL}?subject=${encodeURIComponent("Project inquiry: " + $("#f-type").value)}&body=${encodeURIComponent(body)}`;
+    };
+
+    $("#footer-year").textContent = new Date().getFullYear();
+
+    /* ------------------------------------------------------------------------
+       11. INTERACTIVE AURORA & CONSTELLATION BACKGROUND CANVAS
+       ------------------------------------------------------------------------ */
+    (() => {
+      const canvas = $("#ambient-canvas");
+      const ctx = canvas.getContext("2d");
+      let w = 0, h = 0, nodes = [];
+      const mouse = { x: -9999, y: -9999 };
+
+      function initCanvas() {
+        w = canvas.width = window.innerWidth;
+        h = canvas.height = window.innerHeight;
+        const count = Math.min(48, Math.floor((w * h) / 28000));
+        nodes = Array.from({ length: count }, () => ({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          vx: (Math.random() - 0.5) * 0.38,
+          vy: (Math.random() - 0.5) * 0.38,
+          r: Math.random() * 1.5 + 0.7
+        }));
+      }
+
+      addEventListener("resize", initCanvas);
+      addEventListener("pointermove", e => {
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
+      }, { passive: true });
+
+      initCanvas();
+
+      function drawLoop() {
+        ctx.clearRect(0, 0, w, h);
+        const theme = document.documentElement.getAttribute("data-theme");
+        const rgb = theme === "titanium" ? "9, 13, 22" : theme === "emerald" ? "52, 211, 153" : "212, 255, 51";
+
+        for (let i = 0; i < nodes.length; i++) {
+          const n = nodes[i];
+          n.x += n.vx;
+          n.y += n.vy;
+          if (n.x < 0 || n.x > w) n.vx *= -1;
+          if (n.y < 0 || n.y > h) n.vy *= -1;
+
+          const dx = mouse.x - n.x;
+          const dy = mouse.y - n.y;
+          const dist = Math.hypot(dx, dy);
+
+          ctx.beginPath();
+          ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(${rgb}, ${dist < 180 ? 0.5 : 0.18})`;
+          ctx.fill();
+
+          if (dist < 165) {
+            ctx.beginPath();
+            ctx.moveTo(n.x, n.y);
+            ctx.lineTo(mouse.x, mouse.y);
+            ctx.strokeStyle = `rgba(${rgb}, ${(1 - dist / 165) * 0.22})`;
+            ctx.lineWidth = 0.8;
+            ctx.stroke();
+          }
+        }
+        requestAnimationFrame(drawLoop);
+      }
+      requestAnimationFrame(drawLoop);
+    })();
+  </script>
+</body>
+</html>
